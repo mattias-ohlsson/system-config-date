@@ -1,7 +1,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.15
-Release: 3
+Version: 1.7.16
+Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
 ExclusiveOS: Linux
@@ -24,7 +24,6 @@ Requires: rhpl
 Requires: newt
 Requires: htmlview
 Conflicts: firstboot <= 1.3.26
-Prereq: gtk2 >= 2.6
 
 %description
 system-config-date is a graphical interface for changing the system date and
@@ -99,11 +98,18 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Fri Apr 01 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.16-1
+- use True, False instead of gtk.TRUE, gtk.FALSE to avoid deprecation warnings
+  (#153037)
+
 * Mon Mar 28 2005 Christopher Aillon <caillon@redhat.com>
 - rebuilt
 
-* Fri Mar 25 2005 Christopher Aillon <caillon@redhat.com> 1.17.15-2
+* Fri Mar 25 2005 Christopher Aillon <caillon@redhat.com> 1.7.15-2
 - Update the GTK+ theme icon cache on (un)install
+
+* Sat Jan 15 2005 Nils Philippsen <nphilipp@redhat.com>
+- use current default ntp.conf as template (#132787, #135142)
 
 * Mon Dec 13 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.15-1
 - don't lookup names or IP addresses as this may result in hangs (#142583)
