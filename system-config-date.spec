@@ -1,7 +1,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
 Version: 1.7.7
-Release: 1
+Release: 2
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
 ExclusiveOS: Linux
@@ -15,6 +15,7 @@ Obsoletes: timeconfig
 Obsoletes: redhat-config-date
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
+BuildRequires: python
 Requires: ntp
 Requires: python2
 Requires: usermode >= 1.36
@@ -84,6 +85,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Thu Sep 16 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.7-2
+- buildrequire python
+
 * Tue Sep 14 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.7-1
 - byte-compile python files
 - first shot at something like an interface for firstboot
