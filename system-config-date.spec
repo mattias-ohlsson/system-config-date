@@ -1,7 +1,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.11
-Release: 2
+Version: 1.7.12
+Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
 ExclusiveOS: Linux
@@ -32,11 +32,6 @@ synchronize the time of the system with a NTP time server.
 
 %prep
 %setup -q
-
-pushd man/fr
-iconv -f iso8859-1 -t utf-8 -o system-config-date.8.tmp system-config-date.8
-mv -f system-config-date.8.tmp system-config-date.8
-popd
 
 %build
 make
@@ -91,8 +86,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
-* Mon Nov 22 2004 Jindrich Novy <jnovy@redhat.com> 1.7.11-2
-- Convert french man page to UTF-8 (#139341)
+* Mon Nov 22 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.12-1
+- remove wrongly encoded character (#140318) and duplicate word from French
+  man page
 
 * Wed Sep 29 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.11-1
 - avoid GtkDeprecationWarning on gtk.mainquit on new pygtk (#134043)
