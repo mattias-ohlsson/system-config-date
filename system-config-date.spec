@@ -1,7 +1,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
 Version: 1.7.15
-Release: 2
+Release: 3
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
 ExclusiveOS: Linux
@@ -51,7 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 touch --no-create %{_datadir}/icons/hicolor
-if [-x /usr/bin/gtk-update-icon-cache ]; then
+if [ -x /usr/bin/gtk-update-icon-cache ]; then
   gtk-update-icon-cache %{_datadir}/icons/hicolor
 fi
 
@@ -62,7 +62,7 @@ fi
 
 %postun
 touch --no-create %{_datadir}/icons/hicolor
-if [-x /usr/bin/gtk-update-icon-cache ]; then
+if [ -x /usr/bin/gtk-update-icon-cache ]; then
   gtk-update-icon-cache %{_datadir}/icons/hicolor
 fi
 
@@ -99,6 +99,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Mon Mar 28 2005 Christopher Aillon <caillon@redhat.com>
+- rebuilt
+
 * Fri Mar 25 2005 Christopher Aillon <caillon@redhat.com> 1.17.15-2
 - Update the GTK+ theme icon cache on (un)install
 
