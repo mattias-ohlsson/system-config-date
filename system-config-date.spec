@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.13
+Version: 1.7.14
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -86,6 +86,12 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Mon Nov 29 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.14-1
+- bump version
+
+* Fri Nov 26 2004 Nils Philippsen <nphilipp@redhat.com>
+- don't use duplicate accelerators (#134172, #140241)
+
 * Fri Nov 26 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.13-1
 - enable Gujarati and Tamil translations (#140881)
 
