@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.9
+Version: 1.7.10
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -86,6 +86,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Tue Sep 28 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.10-1
+- make timezone page contents actually be shown in firstboot
+
 * Tue Sep 28 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.9-1
 - enable choosing which notebook page(s) to show (for firstboot, #133748)
 - some minor firstboot API changes, conflict with firstboot <= 1.3.26
