@@ -1,7 +1,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.2
-Release: 1
+Version: 1.7.3
+Release: 3
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
 ExclusiveOS: Linux
@@ -70,6 +70,7 @@ fi
 %attr(0644,root,root) %{_mandir}/ja/man8/system-config-date*
 %attr(0644,root,root) %{_datadir}/applications/system-config-date.desktop
 %attr(0644,root,root) %{_datadir}/system-config-date/pixmaps/system-config-date.png
+%attr(0644,root,root) %{_datadir}/icons/hicolor/48x48/apps/system-config-date.png
 %attr(0644,root,root) %{_datadir}/system-config-date/pixmaps/map480.png
 %attr(0644,root,root) %config(noreplace) /etc/security/console.apps/system-config-date
 %attr(0644,root,root) %config(noreplace) /etc/pam.d/system-config-date
@@ -81,6 +82,15 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Wed Apr 14 2004 Brent Fox <bfox@redhat.com> 1.7.3-3
+- update desktop file (bug #120709)
+
+* Tue Apr  6 2004 Brent Fox <bfox@redhat.com> 1.7.3-2
+- fix desktop file icon path (bug #120176)
+
+* Wed Mar 24 2004 Brent Fox <bfox@redhat.com> 1.7.3-1
+- just copy over file, don't remove it (bug #119076)
+
 * Fri Mar  5 2004 Brent Fox <bfox@redhat.com> 1.7.2-1
 - preserve old restrict lines (bug #72110)
 
