@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.5
+Version: 1.7.6
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -61,6 +61,7 @@ fi
 /usr/sbin/timeconfig
 %dir /usr/share/system-config-date
 /usr/share/system-config-date/*.py
+/usr/share/system-config-date/*.pyc
 /usr/share/system-config-date/*.glade
 %dir /usr/share/system-config-date/pixmaps/
 #%dir /usr/share/firstboot/
@@ -83,6 +84,12 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Tue Sep 14 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.6-1
+- byte-compile python files
+
+* Mon Sep 13 2004 Nils Philippsen <nphilipp@redhat.com>
+- get widget sensitivity correct on startup (#132431)
+
 * Thu Sep 03 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.5-1
 - actually display time zone map (#131641)
 - put NTP stuff into own tab to better accommodate firstboot (#131314)
