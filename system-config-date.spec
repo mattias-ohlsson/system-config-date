@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.3.1
+Version: 1.7.4
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -61,6 +61,7 @@ fi
 /usr/sbin/timeconfig
 %dir /usr/share/system-config-date
 /usr/share/system-config-date/*.py
+/usr/share/system-config-date/*.glade
 %dir /usr/share/system-config-date/pixmaps/
 #%dir /usr/share/firstboot/
 #%dir /usr/share/firstboot/modules
@@ -82,6 +83,10 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Fri Aug 27 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.4-1
+- handle multiple servers, broadcastclient (#115148),
+  local time source (#72110)
+
 * Tue Aug 03 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.3.1-1
 - fix Japanese man page (#128766)
 
