@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.8
+Version: 1.7.9
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -23,6 +23,7 @@ Requires: chkconfig
 Requires: rhpl
 Requires: newt
 Requires: htmlview
+Conflicts: firstboot <= 1.3.26
 
 %description
 system-config-date is a graphical interface for changing the system date and
@@ -85,6 +86,13 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Tue Sep 28 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.9-1
+- enable choosing which notebook page(s) to show (for firstboot, #133748)
+- some minor firstboot API changes, conflict with firstboot <= 1.3.26
+- some minor UI tweaks
+- remove pool.ntp.org from list of NTP server choices as system-config-date
+  doesn't handle multi-IP machines really well ATM
+
 * Fri Sep 17 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.8-1
 - use pool.ntp.org as first choice of NTP servers (#132787)
 
