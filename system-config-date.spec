@@ -1,7 +1,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.3
-Release: 3
+Version: 1.7.3.1
+Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
 ExclusiveOS: Linux
@@ -24,9 +24,9 @@ Requires: newt
 Requires: htmlview
 
 %description
-system-config-date is a graphical interface for changing the system date and time,
-configuring the system time zone, and setting up the NTP daemon 
-to synchronize the time of the system with a NTP time server.
+system-config-date is a graphical interface for changing the system date and
+time, configuring the system time zone, and setting up the NTP daemon to
+synchronize the time of the system with a NTP time server.
 
 %prep
 %setup -q
@@ -82,6 +82,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Tue Aug 03 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.3.1-1
+- fix Japanese man page (#128766)
+
 * Wed Apr 14 2004 Brent Fox <bfox@redhat.com> 1.7.3-3
 - update desktop file (bug #120709)
 
