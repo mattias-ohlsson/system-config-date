@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.10
+Version: 1.7.11
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -86,6 +86,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Wed Sep 29 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.11-1
+- avoid GtkDeprecationWarning on gtk.mainquit on new pygtk (#134043)
+
 * Tue Sep 28 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.10-1
 - make timezone page contents actually be shown in firstboot
 
