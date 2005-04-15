@@ -1,7 +1,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.16
-Release: 2
+Version: 1.7.17
+Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
 ExclusiveOS: Linux
@@ -98,6 +98,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Fri Apr 15 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.17
+- make more strings translatable (#154873)
+
 * Fri Apr 01 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.16-2
 - use True, False instead of gtk.TRUE, gtk.FALSE to avoid deprecation warnings
   (#153037, patch by Colin Charles)
