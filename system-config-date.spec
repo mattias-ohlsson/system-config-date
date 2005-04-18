@@ -1,7 +1,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
 Version: 1.7.17
-Release: 1
+Release: 2
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
 ExclusiveOS: Linux
@@ -51,7 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 touch --no-create %{_datadir}/icons/hicolor
 if [ -x /usr/bin/gtk-update-icon-cache ]; then
-  gtk-update-icon-cache %{_datadir}/icons/hicolor
+  gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
 fi
 
 %preun
@@ -62,7 +62,7 @@ fi
 %postun
 touch --no-create %{_datadir}/icons/hicolor
 if [ -x /usr/bin/gtk-update-icon-cache ]; then
-  gtk-update-icon-cache %{_datadir}/icons/hicolor
+  gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
 fi
 
 %files -f %{name}.lang
@@ -98,6 +98,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Tue Apr 19 2005 Matthias Clasen <mclasen@redhat.com> 1.7.17-2
+- Silence %%post 
+
 * Fri Apr 15 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.17
 - make more strings translatable (#154873)
 
