@@ -1,7 +1,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.17
-Release: 2
+Version: 1.7.18
+Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
 ExclusiveOS: Linux
@@ -15,6 +15,7 @@ Obsoletes: timeconfig
 Obsoletes: redhat-config-date
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
+BuildRequires: intltool
 BuildRequires: python
 Requires: ntp
 Requires: python2
@@ -37,7 +38,7 @@ synchronize the time of the system with a NTP time server.
 make
 
 %install
-make INSTROOT=$RPM_BUILD_ROOT install
+make DESTDIR=$RPM_BUILD_ROOT install
 desktop-file-install --vendor system --delete-original       \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications             \
   --add-category X-Red-Hat-Base                             \
@@ -98,8 +99,13 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Fri May 06 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.18
+- make desktop file translatable (#156792)
+- avoid DeprecationWarnings
+- use DESTDIR consistently (#156782)
+
 * Tue Apr 19 2005 Matthias Clasen <mclasen@redhat.com> 1.7.17-2
-- Silence %%post 
+- Silence %%post
 
 * Fri Apr 15 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.17
 - make more strings translatable (#154873)
