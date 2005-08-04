@@ -75,9 +75,6 @@ fi
 /usr/share/system-config-date/*.pyo
 /usr/share/system-config-date/*.glade
 %dir /usr/share/system-config-date/pixmaps/
-#%dir /usr/share/firstboot/
-#%dir /usr/share/firstboot/modules
-#/usr/share/firstboot/modules/system-config-date.py
 %attr(0644,root,root) %{_mandir}/man8/system-config-date*
 %attr(0644,root,root) %{_mandir}/fr/man8/system-config-date*
 %attr(0644,root,root) %{_mandir}/ja/man8/system-config-date*
@@ -101,6 +98,9 @@ fi
 - try to be smart about restrict lines when changing or deleting hosts
 - include *.pyo files (#165097)
 - don't remove *.pyc files in %%preun because they're in the file list
+- don't include timetool symlink anymore
+- don't install firstboot module symlink, this is dealt with in the firstboot
+  package for quite a while
 
 * Wed Aug 03 2005 Nils Philippsen <nphilipp@redhat.com>
 - implement --help, catch unrecognized options (#164791)
