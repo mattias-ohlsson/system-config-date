@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.18
+Version: 1.7.99.0
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -55,11 +55,6 @@ if [ -x /usr/bin/gtk-update-icon-cache ]; then
   gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
 fi
 
-%preun
-if [ -d %{_datadir}/system-config-date ] ; then
-  rm -rf %{_datadir}/system-config-date/*.pyc
-fi
-
 %postun
 touch --no-create %{_datadir}/icons/hicolor
 if [ -x /usr/bin/gtk-update-icon-cache ]; then
@@ -77,6 +72,7 @@ fi
 %dir /usr/share/system-config-date
 /usr/share/system-config-date/*.py
 /usr/share/system-config-date/*.pyc
+/usr/share/system-config-date/*.pyo
 /usr/share/system-config-date/*.glade
 %dir /usr/share/system-config-date/pixmaps/
 #%dir /usr/share/firstboot/
@@ -99,6 +95,16 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Thu Aug 04 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.0
+- add and edit NTP servers inline in the list
+- always display clock left-to-right (#165109)
+- try to be smart about restrict lines when changing or deleting hosts
+- include *.pyo files (#165097)
+- don't remove *.pyc files in %%preun because they're in the file list
+
+* Wed Aug 03 2005 Nils Philippsen <nphilipp@redhat.com>
+- implement --help, catch unrecognized options (#164791)
+
 * Fri May 06 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.18
 - make desktop file translatable (#156792)
 - avoid DeprecationWarnings
