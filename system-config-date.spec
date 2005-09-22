@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.0
+Version: 1.7.99.1
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -92,6 +92,13 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Thu Sep 22 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.1
+- check whether NTP server is reachable on changes (#135747)
+
+* Tue Aug 09 2005 Nils Philippsen <nphilipp@redhat.com>
+- remove workaround causing deprecation warnings for bug that doesn't exist
+  anymore (#162840)
+
 * Thu Aug 04 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.0
 - add and edit NTP servers inline in the list
 - always display clock left-to-right (#165109)
