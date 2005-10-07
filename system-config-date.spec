@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.1
+Version: 1.7.99.2
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -92,6 +92,11 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Fri Oct 07 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.2
+- write comment about the ZONE parameter into /etc/sysconfig/clock (#123101)
+- handle comments when reading /etc/sysconfig/clock
+- consistently use spaces for indentation in timezoneBackend.py
+
 * Thu Sep 22 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.1
 - check whether NTP server is reachable on changes (#135747)
 
