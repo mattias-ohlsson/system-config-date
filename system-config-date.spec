@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.2
+Version: 1.7.99.3
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -92,6 +92,12 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Fri Oct 21 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.3
+- revamp pot file generation (#171330)
+
+* Fri Oct 14 2005 Nils Philippsen <nphilipp@redhat.com>
+- don't use pam_stack (#170623)
+
 * Fri Oct 07 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.2
 - write comment about the ZONE parameter into /etc/sysconfig/clock (#123101)
 - handle comments when reading /etc/sysconfig/clock
