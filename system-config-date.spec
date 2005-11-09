@@ -81,7 +81,8 @@ fi
 %attr(0644,root,root) %{_datadir}/applications/system-config-date.desktop
 %attr(0644,root,root) %{_datadir}/system-config-date/pixmaps/system-config-date.png
 %attr(0644,root,root) %{_datadir}/icons/hicolor/48x48/apps/system-config-date.png
-%attr(0644,root,root) %{_datadir}/system-config-date/pixmaps/map480.png
+%attr(0644,root,root) %{_datadir}/system-config-date/pixmaps/map1440.png
+%attr(0644,root,root) %{_datadir}/system-config-date/regions
 %attr(0644,root,root) %config(noreplace) /etc/security/console.apps/system-config-date
 %attr(0644,root,root) %config(noreplace) /etc/pam.d/system-config-date
 %attr(0644,root,root) %config(noreplace) /etc/security/console.apps/system-config-time
