@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.5
+Version: 1.7.99.6
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -93,6 +93,12 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Mon Nov 21 2005 Nils Philippsen <nphilipp@redhat.com>
+- fix zooming problems with enlarged window (#172982)
+- apply workaround by Alex Larsson to avoid hanging when clicking on Asia
+  region (#172977)
+- add Middle America region, make Antarctica regions overlapping
+
 * Thu Nov 10 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.5
 - when choosing a region, shade off the rest of the map when hovering over a
   region
