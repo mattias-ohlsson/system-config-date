@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.6
+Version: 1.7.99.7
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -93,7 +93,16 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
-* Mon Nov 21 2005 Nils Philippsen <nphilipp@redhat.com>
+* Thu Nov 24 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.7
+- only select region if pointer is inside region
+- replace aa-based shading to avoid aa-related deficiencies of GnomeCanvas
+- show shaded border around zoomed in region to zoom out without selecting a
+  city
+
+* Wed Nov 23 2005 Nils Philippsen <nphilipp@redhat.com>
+- don't let cities get miraculously lost (#173944, patch by Chris Lumens)
+
+* Mon Nov 21 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.6
 - fix zooming problems with enlarged window (#172982)
 - apply workaround by Alex Larsson to avoid hanging when clicking on Asia
   region (#172977)
