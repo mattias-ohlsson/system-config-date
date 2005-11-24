@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.7
+Version: 1.7.99.8
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -93,6 +93,10 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Thu Nov 24 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.8
+- reshow shaded map when reentering map widget from outside
+- clear status line when outside region area in zoomed mode
+
 * Thu Nov 24 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.7
 - only select region if pointer is inside region
 - replace aa-based shading to avoid aa-related deficiencies of GnomeCanvas
