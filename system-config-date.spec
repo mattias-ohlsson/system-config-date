@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.11
+Version: 1.7.99.12
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -93,6 +93,14 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Wed Jan 04 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.12
+- show actually chosen region, not just something that's in the vicinity
+
+* Fri Dec 30 2005 Nils Philippsen <nphilipp@redhat.com>
+- fix highlighted regions when leaving and entering the timeone map canvas
+- make timezone list a treeview
+- update timezone po source file
+
 * Thu Dec 15 2005 Jeremy Katz <katzj@redhat.com> - 1.7.99.11-1
 - fix timezone map to not be painfully slow
 
