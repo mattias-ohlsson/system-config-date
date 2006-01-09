@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.12
+Version: 1.7.99.13
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -93,6 +93,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Mon Jan 09 2006 Chris Lumens <clumens@redhat.com> 1.7.99.13-1
+- Rename mainWindow to scdMainWindow to avoid import problems in firstboot.
+
 * Wed Jan 04 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.12
 - show actually chosen region, not just something that's in the vicinity
 
