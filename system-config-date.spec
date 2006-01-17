@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.14
+Version: 1.7.99.15
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -93,7 +93,10 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
-* Mon Jan 16 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.14-1
+* Tue Jan 17 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.15
+- fix setting timezone from firstboot (#177779, patch by Chris Lumens)
+
+* Mon Jan 16 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.14
 - put Etc/... timezones into "Non-geographic timezones" (#148025)
 - default to already set timezone on startup (#177815)
 
