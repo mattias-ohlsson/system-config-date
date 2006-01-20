@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.16
+Version: 1.7.99.17
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -93,6 +93,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Fri Jan 20 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.17
+- zoom out in TZ map on Escape (#178093)
+
 * Wed Jan 18 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.16
 - don't crash when selecting a timezone (#178086, patch by Chris Lumens)
 
