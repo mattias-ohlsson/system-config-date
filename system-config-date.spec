@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.7.99.17
+Version: 1.8.0
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -19,6 +19,8 @@ BuildRequires: intltool
 BuildRequires: python
 Requires: ntp
 Requires: python2
+Requires: pygtk2-libglade
+Requires: gnome-python2-canvas
 Requires: usermode >= 1.36
 Requires: chkconfig
 Requires: rhpl
@@ -93,6 +95,10 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Mon Jan 30 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.0
+- bump minor version
+- add requirements for pygtk2-libglade, gnome-python2-canvas (#179215)
+
 * Fri Jan 20 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.17
 - zoom out in TZ map on Escape (#178093)
 
