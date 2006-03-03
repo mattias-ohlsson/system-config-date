@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.0
+Version: 1.8.1
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -26,6 +26,8 @@ Requires: chkconfig
 Requires: rhpl
 Requires: newt
 Requires: htmlview
+Requires(post): hicolor-icon-theme
+Requires(postun): hicolor-icon-theme
 Conflicts: firstboot <= 1.3.26
 
 %description
@@ -95,6 +97,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Fri Mar 03 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.1
+- require hicolor-icon-theme (#182859, #182860)
+
 * Mon Jan 30 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.0
 - bump minor version
 - add requirements for pygtk2-libglade, gnome-python2-canvas (#179215)
