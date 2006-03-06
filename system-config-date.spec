@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.1
+Version: 1.8.2
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -97,6 +97,10 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Mon Mar 06 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.2
+- don't write into /tmp
+- make synchronizing with time servers configurable (#157485)
+
 * Fri Mar 03 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.1
 - require hicolor-icon-theme (#182859, #182860)
 
