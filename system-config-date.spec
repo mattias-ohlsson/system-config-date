@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.2
+Version: 1.8.3
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -17,6 +17,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: intltool
 BuildRequires: python
+BuildRequires: anaconda
 Requires: ntp
 Requires: python2
 Requires: pygtk2-libglade
@@ -33,7 +34,7 @@ Conflicts: firstboot <= 1.3.26
 %description
 system-config-date is a graphical interface for changing the system date and
 time, configuring the system time zone, and setting up the NTP daemon to
-synchronize the time of the system with a NTP time server.
+synchronize the time of the system with an NTP time server.
 
 %prep
 %setup -q
@@ -97,6 +98,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Tue Mar 14 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.3
+- feed timezone po files from anaconda (#131528, patch by Andrew Martynov)
+
 * Mon Mar 06 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.2
 - don't write into /tmp
 - make synchronizing with time servers configurable (#157485)
