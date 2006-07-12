@@ -1,7 +1,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
 Version: 1.8.3
-Release: 1
+Release: 1.1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
 ExclusiveOS: Linux
@@ -98,6 +98,9 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Wed Jul 12 2006 Jesse Keating <jkeating@redhat.com> - 1.8.3-1.1
+- rebuild
+
 * Tue Mar 14 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.3
 - feed timezone po files from anaconda (#131528, patch by Andrew Martynov)
 
