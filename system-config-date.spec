@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.4
+Version: 1.8.5
 Release: 1
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -98,6 +98,10 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Fri Aug 25 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.5
+- hide 'Enable NTP Broadcast' checkbutton as more action is needed than a mere
+  change in ntp.conf
+
 * Mon Jul 17 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.4
 - pick up updated translations
 
