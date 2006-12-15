@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.10
+Version: 1.8.11
 Release: 1%{?dist}
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -98,6 +98,14 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Fri Dec 15 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.11
+- provide more info when encountering bad timezone translations (i.e. not split
+  into Region,Continent/Location) (#219773)
+- pick up updated translations (#216073)
+
+* Wed Dec 13 2006 Nils Philippsen <nphilipp@redhat.com>
+- fix keyboard shortcuts in Czech translation (#190355)
+
 * Wed Dec 13 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.10
 - pick up updated translations (#216073)
 
