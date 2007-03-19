@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.13
+Version: 1.8.90
 Release: 1%{?dist}
 URL: http://fedora.redhat.com/projects/config-tools/
 License: GPL
@@ -98,6 +98,20 @@ fi
 %attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Mon Mar 19 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.90
+- add tooltip to zoomed-in canvas to describe panning
+
+* Sun Mar 18 2007 Nils Philippsen <nphilipp@redhat.com>
+- display to-be-selected city inside map instead of status bar (#211550)
+- remove remaining regions cruft
+- make currently selected city non-selectable
+
+* Sat Mar 17 2007 Nils Philippsen <nphilipp@redhat.com>
+- implement panning of zoomed timezone map
+
+* Wed Mar 14 2007 Nils Philippsen <nphilipp@redhat.com>
+- add zoom slider instead of regions (#211543, #211546)
+
 * Fri Feb 23 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.13
 - pick up updated translations (#229727)
 
