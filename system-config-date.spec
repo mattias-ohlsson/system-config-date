@@ -1,13 +1,15 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.90
+Version: 1.8.91
 Release: 1%{?dist}
-URL: http://fedora.redhat.com/projects/config-tools/
+URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPL
 ExclusiveOS: Linux
 Group: System Environment/Base
-BuildRoot: %{_tmppath}/%{name}-%{version}-root
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
+# We are upstream, thus the source is only available from within this source
+# package.
 Source0: %{name}-%{version}.tar.bz2
 Obsoletes: timetool
 Obsoletes: dateconfig
@@ -19,7 +21,7 @@ BuildRequires: intltool
 BuildRequires: python
 BuildRequires: anaconda
 Requires: ntp
-Requires: python2
+Requires: python >= 2.0
 Requires: pygtk2-libglade
 Requires: gnome-python2-canvas
 Requires: usermode >= 1.36
@@ -43,6 +45,7 @@ synchronize the time of the system with an NTP time server.
 make
 
 %install
+rm -rf $RPM_BUILD_ROOT
 make DESTDIR=$RPM_BUILD_ROOT install
 desktop-file-install --vendor system --delete-original       \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications             \
@@ -95,9 +98,22 @@ fi
 %attr(0644,root,root) %config(noreplace) /etc/security/console.apps/dateconfig
 %attr(0644,root,root) %config(noreplace) /etc/pam.d/dateconfig
 %attr(0644,root,root) %config(noreplace) /etc/ntp/ntpservers
-%attr(0644,root,root) %config(noreplace) /usr/share/system-config-date/ntp.template
+%attr(0644,root,root) /usr/share/system-config-date/ntp.template
 
 %changelog
+* Thu Mar 22 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.91
+- update URL
+
+* Tue Mar 20 2007 Nils Philippsen <nphilipp@redhat.com>
+- mention that we are upstream
+- use preferred buildroot
+- use Category: ... System; ... in desktop file
+- clean buildroot before installing
+- fix licensing blurb in PO files
+- require python >= 2.0 instead of python2
+- recode spec file to UTF-8
+- don't mark ntp.template as %%config
+
 * Mon Mar 19 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.90
 - add tooltip to zoomed-in canvas to describe panning
 
@@ -653,7 +669,7 @@ fi
 * Thu May 2 2002 Brent Fox <bfox@redhat.com> 1.0.1-2
 - Update for timezone translations
 
-* Mon Apr 15 2002 Trond Eivind Glomsrød <teg@redhat.com> 1.0.1-1
+* Mon Apr 15 2002 Trond Eivind GlomsrÃ¸d <teg@redhat.com> 1.0.1-1
 - Update for translations
 
 * Mon Feb 25 2002 Brent Fox <bfox@redhat.com>
@@ -671,7 +687,7 @@ fi
 * Thu Oct 18 2001 Brent Fox <bfox@redhat.com>
 - Put timezonemapmodule in /usr/lib/dateconfig
 
-* Thu Aug 30 2001 Trond Eivind Glomsrød <teg@redhat.com> 0.7.4-6
+* Thu Aug 30 2001 Trond Eivind GlomsrÃ¸d <teg@redhat.com> 0.7.4-6
 - Fix some character sets for translations (#52851)
 - dateconfig.png isn't a config file, mark the config files as noreplace
 
