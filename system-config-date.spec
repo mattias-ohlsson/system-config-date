@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.92
+Version: 1.8.93
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPL
@@ -31,6 +31,9 @@ Requires: newt
 Requires: htmlview
 Requires(post): hicolor-icon-theme
 Requires(postun): hicolor-icon-theme
+# system-config-date can act as a plugin to set the time/date, configure NTP or
+# the timezone for firstboot if the latter is present, but doesn't require it.
+# It won't work with old versions of firstboot however.
 Conflicts: firstboot <= 1.3.26
 
 %description
@@ -93,6 +96,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Mon Mar 26 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.93
+- explain why system-config-date conflicts with old versions of firstboot
+
 * Mon Mar 26 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.92
 - use correct modes when installing, to avoid fixing modes when packaging and
   to be able to strip down %%files
