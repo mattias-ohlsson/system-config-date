@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.91
+Version: 1.8.92
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPL
@@ -73,34 +73,31 @@ fi
 %defattr(-,root,root)
 %doc COPYING
 %doc doc/*
-/usr/bin/system-config-date
-/usr/bin/system-config-time
-/usr/bin/dateconfig
-/usr/sbin/timeconfig
-%dir /usr/share/system-config-date
-/usr/share/system-config-date/*.py
-/usr/share/system-config-date/*.pyc
-/usr/share/system-config-date/*.pyo
-/usr/share/system-config-date/*.glade
-%dir /usr/share/system-config-date/pixmaps/
-%attr(0644,root,root) %{_mandir}/man8/system-config-date*
-%attr(0644,root,root) %{_mandir}/fr/man8/system-config-date*
-%attr(0644,root,root) %{_mandir}/ja/man8/system-config-date*
-%attr(0644,root,root) %{_datadir}/applications/system-config-date.desktop
-%attr(0644,root,root) %{_datadir}/system-config-date/pixmaps/system-config-date.png
-%attr(0644,root,root) %{_datadir}/icons/hicolor/48x48/apps/system-config-date.png
-%attr(0644,root,root) %{_datadir}/system-config-date/pixmaps/map1440.png
-%attr(0644,root,root) %{_datadir}/system-config-date/regions
-%attr(0644,root,root) %config(noreplace) /etc/security/console.apps/system-config-date
-%attr(0644,root,root) %config(noreplace) /etc/pam.d/system-config-date
-%attr(0644,root,root) %config(noreplace) /etc/security/console.apps/system-config-time
-%attr(0644,root,root) %config(noreplace) /etc/pam.d/system-config-time
-%attr(0644,root,root) %config(noreplace) /etc/security/console.apps/dateconfig
-%attr(0644,root,root) %config(noreplace) /etc/pam.d/dateconfig
-%attr(0644,root,root) %config(noreplace) /etc/ntp/ntpservers
-%attr(0644,root,root) /usr/share/system-config-date/ntp.template
+%{_bindir}/system-config-date
+%{_bindir}/system-config-time
+%{_bindir}/dateconfig
+%{_sbindir}/timeconfig
+%{_datadir}/system-config-date
+%{_datadir}/applications/system-config-date.desktop
+%{_datadir}/system-config-date/pixmaps/system-config-date.png
+%{_datadir}/icons/hicolor/48x48/apps/system-config-date.png
+%{_mandir}/man8/system-config-date*
+%{_mandir}/fr/man8/system-config-date*
+%{_mandir}/ja/man8/system-config-date*
+%config(noreplace) %{_sysconfdir}/security/console.apps/system-config-date
+%config(noreplace) %{_sysconfdir}/pam.d/system-config-date
+%config(noreplace) %{_sysconfdir}/security/console.apps/system-config-time
+%config(noreplace) %{_sysconfdir}/pam.d/system-config-time
+%config(noreplace) %{_sysconfdir}/security/console.apps/dateconfig
+%config(noreplace) %{_sysconfdir}/pam.d/dateconfig
+%config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Mon Mar 26 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.92
+- use correct modes when installing, to avoid fixing modes when packaging and
+  to be able to strip down %%files
+- don't ship unneeded regions file
+
 * Thu Mar 22 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.91
 - update URL
 
