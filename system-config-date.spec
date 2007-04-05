@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.93
+Version: 1.8.94
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPL
@@ -96,6 +96,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Thu Apr 05 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.94
+- use underscores instead of spaces in timezone filenames (#235064)
+
 * Mon Mar 26 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.93
 - explain why system-config-date conflicts with old versions of firstboot
 
