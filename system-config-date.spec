@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.94
+Version: 1.8.95
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPL
@@ -96,6 +96,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Tue Apr 24 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.95
+- move zoom scale to the left of the canvas
+
 * Thu Apr 05 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.94
 - use underscores instead of spaces in timezone filenames (#235064)
 
