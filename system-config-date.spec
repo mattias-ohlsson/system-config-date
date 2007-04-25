@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.95
+Version: 1.8.96
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPL
@@ -11,10 +11,10 @@ BuildArch: noarch
 # We are upstream, thus the source is only available from within this source
 # package.
 Source0: %{name}-%{version}.tar.bz2
-Obsoletes: timetool
-Obsoletes: dateconfig
-Obsoletes: timeconfig
-Obsoletes: redhat-config-date
+Obsoletes: timetool < 3.0
+Obsoletes: dateconfig < 1.2
+Obsoletes: timeconfig < 3.2.10
+Obsoletes: redhat-config-date < 1.5.26
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: intltool
@@ -96,6 +96,11 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Wed Apr 25 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.96
+- handle missing /etc/ntp.conf gracefully (#237777)
+- versionize obsoletes
+- pick up updated translations
+
 * Tue Apr 24 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.95
 - move zoom scale to the left of the canvas
 
