@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.8.96
+Version: 1.9.0
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPL
@@ -96,6 +96,17 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Wed May 02 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.0
+- pick up updated translations (#237930)
+
+* Sat Apr 28 2007 Nils Philippsen <nphilipp@redhat.com>
+- don't use underscore in default timezone in textmode tool
+
+* Fri Apr 27 2007 Nils Philippsen <nphilipp@redhat.com>
+- add scrollbars to timezone canvas (#230690)
+- scroll to city selected via treeview
+- don't resize window due to excessively long comments of cities
+
 * Wed Apr 25 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.96
 - handle missing /etc/ntp.conf gracefully (#237777)
 - versionize obsoletes
