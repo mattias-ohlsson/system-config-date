@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.2
+Version: 1.9.3
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPL
@@ -96,6 +96,19 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Tue Jul 31 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.3
+- fix canvas tooltip
+
+* Mon Jul 30 2007 Nils Philippsen <nphilipp@redhat.com>
+- use smoother zoom steps when using the mouse wheel
+- hide city label when using the mouse wheel to zoom
+
+* Fri Jul 27 2007 Nils Philippsen <nphilipp@redhat.com>
+- use scroll wheel to adjust zoom factor
+
+* Fri Jul 27 2007 Thomas Woerner <twoerner@redhat.com>
+- fixed map panning
+
 * Mon Jul 23 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.2
 - fix python formatting in Japanese translation (#248667, Jens Petersen)
 - make "make archive" work with Hg repo
