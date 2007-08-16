@@ -1,9 +1,9 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.3
-Release: 2%{?dist}
+Version: 1.9.4
+Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
-License: GPL
+License: GPLv2+
 ExclusiveOS: Linux
 Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -27,7 +27,11 @@ Requires: gnome-python2-canvas
 Requires: usermode >= 1.36
 Requires: chkconfig
 Requires: rhpl
+%if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 8 || 0%{?rhel} >= 6
+Requires: newt-python
+%else
 Requires: newt
+%endif
 Requires: htmlview
 Requires(post): hicolor-icon-theme
 Requires(postun): hicolor-icon-theme
@@ -96,8 +100,23 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
-* Tue Jul 31 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.3-2
-- bump release to appease build system
+* Thu Aug 16 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.4
+- display error message if setting time and date fails (#251818)
+- require newt-python from Fedora 8 on (#251362)
+
+* Tue Aug 14 2007 Nils Philippsen <nphilipp@redhat.com>
+- use different shortcuts for enabling NTP and editing a server (#252043)
+
+* Mon Aug 13 2007 Nils Philippsen <nphilipp@redhat.com>
+- use correct "time zone" term (#251868)
+- check hour, minute, second values when changed (#251821)
+
+* Fri Aug 10 2007 Nils Philippsen <nphilipp@redhat.com>
+- don't use python2 binary
+
+* Fri Aug 03 2007 Nils Philippsen <nphilipp@redhat.com>
+- fix licensing and author blurbs
+- tag as GPLv2+
 
 * Tue Jul 31 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.3
 - fix canvas tooltip
