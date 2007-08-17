@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.4
+Version: 1.9.5
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -100,6 +100,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Fri Aug 17 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.5
+- fix python string placeholders in id and ms translations (#250495, #250500)
+
 * Thu Aug 16 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.4
 - display error message if setting time and date fails (#251818)
 - require newt-python from Fedora 8 on (#251362)
