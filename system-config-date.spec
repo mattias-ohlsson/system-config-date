@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.5
+Version: 1.9.6
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -100,6 +100,10 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Mon Aug 27 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.6
+- replace "timezone" by "time zone" where visible (#253428)
+- updated translations (#253830)
+
 * Fri Aug 17 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.5
 - fix python string placeholders in id and ms translations (#250495, #250500)
 
