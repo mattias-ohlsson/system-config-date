@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.11
+Version: 1.9.12
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -32,7 +32,11 @@ Requires: newt-python
 %else
 Requires: newt
 %endif
+%if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 7 || 0%{?rhel} >= 6
+Requires: xdg-utils
+%else
 Requires: htmlview
+%endif
 Requires(post): hicolor-icon-theme
 Requires(postun): hicolor-icon-theme
 # system-config-date can act as a plugin to set the time/date, configure NTP or
@@ -100,6 +104,15 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Tue Oct 09 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.12
+- use xdg-open if available
+- don't throw exceptions when selecting non-geographic time zones (#293241)
+- fix permissions of timeconfig tool (#241737)
+
+* Mon Oct 08 2007 Nils Philippsen <nphilipp@redhat.com>
+- add "make diff" ("dif") and "make shortdiff" ("sdif")
+- make canvas scroll buttons work (#324941)
+
 * Tue Oct 02 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.11
 - don't remove notebook pages when acting as a firstboot module (#296711)
 - pick up updated translations
