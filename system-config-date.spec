@@ -1,10 +1,9 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.12
+Version: 1.9.13
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
-ExclusiveOS: Linux
 Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
@@ -37,8 +36,7 @@ Requires: xdg-utils
 %else
 Requires: htmlview
 %endif
-Requires(post): hicolor-icon-theme
-Requires(postun): hicolor-icon-theme
+Requires: hicolor-icon-theme
 # system-config-date can act as a plugin to set the time/date, configure NTP or
 # the timezone for firstboot if the latter is present, but doesn't require it.
 # It won't work with old versions of firstboot however.
@@ -53,7 +51,7 @@ synchronize the time of the system with an NTP time server.
 %setup -q
 
 %build
-make
+make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -70,18 +68,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 touch --no-create %{_datadir}/icons/hicolor
-if [ -x /usr/bin/gtk-update-icon-cache ]; then
-  gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
+if [ -x %{_bindir}/gtk-update-icon-cache ]; then
+  %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
 
 %postun
 touch --no-create %{_datadir}/icons/hicolor
-if [ -x /usr/bin/gtk-update-icon-cache ]; then
-  gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
+if [ -x %{_bindir}/gtk-update-icon-cache ]; then
+  %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
 
 %files -f %{name}.lang
-%defattr(-,root,root)
+%defattr(-,root,root,-)
 %doc COPYING
 %doc doc/*
 %{_bindir}/system-config-date
@@ -104,7 +102,18 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
-* Tue Oct 09 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.12
+* Mon Oct 15 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.13-1
+- change hicolor-icon-theme requirement to be "uncolored" (without
+  "(post)"/"(postun)")
+- use full path to call gtk-update-icon-cache
+- don't let gtk-update-icon-cache fail scriptlets
+- use "make %%{?_smp_mflags}"
+- remove "ExclusiveOS: Linux"
+- remove obsolete no.po translation file
+- use "%%defattr(-,root,root,-)"
+- add release tags to changelog versions to appease rpmlint
+
+* Tue Oct 09 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.12-1
 - use xdg-open if available
 - don't throw exceptions when selecting non-geographic time zones (#293241)
 - fix permissions of timeconfig tool (#241737)
@@ -113,30 +122,30 @@ fi
 - add "make diff" ("dif") and "make shortdiff" ("sdif")
 - make canvas scroll buttons work (#324941)
 
-* Tue Oct 02 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.11
+* Tue Oct 02 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.11-1
 - don't remove notebook pages when acting as a firstboot module (#296711)
 - pick up updated translations
 
-* Tue Oct 02 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.10
+* Tue Oct 02 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.10-1
 - pick up updated translations
 
-* Sun Sep 16 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.9
+* Sun Sep 16 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.9-1
 - pick up updated translations
 
-* Sat Sep 15 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.8
+* Sat Sep 15 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.8-1
 - pick up updated translations
 
 * Mon Sep 10 2007 Nils Philippsen <nphilipp@redhat.com>
 - make use of force tagging (since mercurial 0.9.4)
 
-* Mon Aug 27 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.7
+* Mon Aug 27 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.7-1
 - replace "timezone" by "time zone" where visible (#253428)
 - updated translations (#253829)
 
-* Fri Aug 17 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.5
+* Fri Aug 17 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.5-1
 - fix python string placeholders in id and ms translations (#250495, #250500)
 
-* Thu Aug 16 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.4
+* Thu Aug 16 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.4-1
 - display error message if setting time and date fails (#251818)
 - require newt-python from Fedora 8 on (#251362)
 
@@ -154,7 +163,7 @@ fi
 - fix licensing and author blurbs
 - tag as GPLv2+
 
-* Tue Jul 31 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.3
+* Tue Jul 31 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.3-1
 - fix canvas tooltip
 
 * Mon Jul 30 2007 Nils Philippsen <nphilipp@redhat.com>
@@ -167,14 +176,14 @@ fi
 * Fri Jul 27 2007 Thomas Woerner <twoerner@redhat.com>
 - fixed map panning
 
-* Mon Jul 23 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.2
+* Mon Jul 23 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.2-1
 - fix python formatting in Japanese translation (#248667, Jens Petersen)
 - make "make archive" work with Hg repo
 
-* Wed Jun 27 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.1
+* Wed Jun 27 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.1-1
 - fix desktop file category (#245891)
 
-* Wed May 02 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.0
+* Wed May 02 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.0-1
 - pick up updated translations (#237930)
 
 * Sat Apr 28 2007 Nils Philippsen <nphilipp@redhat.com>
@@ -185,26 +194,26 @@ fi
 - scroll to city selected via treeview
 - don't resize window due to excessively long comments of cities
 
-* Wed Apr 25 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.96
+* Wed Apr 25 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.96-1
 - handle missing /etc/ntp.conf gracefully (#237777)
 - versionize obsoletes
 - pick up updated translations
 
-* Tue Apr 24 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.95
+* Tue Apr 24 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.95-1
 - move zoom scale to the left of the canvas
 
-* Thu Apr 05 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.94
+* Thu Apr 05 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.94-1
 - use underscores instead of spaces in timezone filenames (#235064)
 
-* Mon Mar 26 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.93
+* Mon Mar 26 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.93-1
 - explain why system-config-date conflicts with old versions of firstboot
 
-* Mon Mar 26 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.92
+* Mon Mar 26 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.92-1
 - use correct modes when installing, to avoid fixing modes when packaging and
   to be able to strip down %%files
 - don't ship unneeded regions file
 
-* Thu Mar 22 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.91
+* Thu Mar 22 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.91-1
 - update URL
 
 * Tue Mar 20 2007 Nils Philippsen <nphilipp@redhat.com>
@@ -217,7 +226,7 @@ fi
 - recode spec file to UTF-8
 - don't mark ntp.template as %%config
 
-* Mon Mar 19 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.90
+* Mon Mar 19 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.90-1
 - add tooltip to zoomed-in canvas to describe panning
 
 * Sun Mar 18 2007 Nils Philippsen <nphilipp@redhat.com>
@@ -231,10 +240,10 @@ fi
 * Wed Mar 14 2007 Nils Philippsen <nphilipp@redhat.com>
 - add zoom slider instead of regions (#211543, #211546)
 
-* Fri Feb 23 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.13
+* Fri Feb 23 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.13-1
 - pick up updated translations (#229727)
 
-* Tue Jan 16 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.12
+* Tue Jan 16 2007 Nils Philippsen <nphilipp@redhat.com> 1.8.12-1
 - pick up updated translations (#220952)
 
 * Mon Jan 08 2007 Nils Philippsen <nphilipp@redhat.com>
@@ -243,7 +252,7 @@ fi
 * Fri Jan 05 2007 Nils Philippsen <nphilipp@redhat.com>
 - don't attempt to show error dialog from signal handler (#220952)
 
-* Fri Dec 15 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.11
+* Fri Dec 15 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.11-1
 - provide more info when encountering bad timezone translations (i.e. not split
   into Region,Continent/Location) (#219773)
 - pick up updated translations (#216073)
@@ -251,58 +260,58 @@ fi
 * Wed Dec 13 2006 Nils Philippsen <nphilipp@redhat.com>
 - fix keyboard shortcuts in Czech translation (#190355)
 
-* Wed Dec 13 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.10
+* Wed Dec 13 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.10-1
 - pick up updated translations (#216073)
 
-* Fri Nov 24 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.9
+* Fri Nov 24 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.9-1
 - pick up updated translations (#216073)
 
 * Tue Nov 21 2006 Nils Philippsen <nphilipp@redhat.com>
 - revamp timezone potfile generation a bit
 - pick up new timezones for translation (#216073)
 
-* Tue Oct 17 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.8
+* Tue Oct 17 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.8-1
 - enable Hebrew, Marathi and Urdu translations
 - pick up updated translations (#211074)
 - add dist tag
 
-* Fri Oct 13 2006 Bill Nottingham <notting@redhat.com> 1.8.7
+* Fri Oct 13 2006 Bill Nottingham <notting@redhat.com> 1.8.7-1
 - use valid charsets for translation (#210720)
 
-* Fri Sep 15 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.6
+* Fri Sep 15 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.6-1
 - pick up updated strings and translations (#192075, #204441)
 
-* Fri Aug 25 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.5
+* Fri Aug 25 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.5-1
 - hide 'Enable NTP Broadcast' checkbutton as more action is needed than a mere
   change in ntp.conf
 
-* Mon Jul 17 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.4
+* Mon Jul 17 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.4-1
 - pick up updated translations
 
-* Tue Mar 14 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.3
+* Tue Mar 14 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.3-1
 - feed timezone po files from anaconda (#131528, patch by Andrew Martynov)
 
-* Mon Mar 06 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.2
+* Mon Mar 06 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.2-1
 - don't write into /tmp
 - make synchronizing with time servers configurable (#157485)
 
-* Fri Mar 03 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.1
+* Fri Mar 03 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.1-1
 - require hicolor-icon-theme (#182859, #182860)
 
-* Mon Jan 30 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.0
+* Mon Jan 30 2006 Nils Philippsen <nphilipp@redhat.com> 1.8.0-1
 - bump minor version
 - add requirements for pygtk2-libglade, gnome-python2-canvas (#179215)
 
-* Fri Jan 20 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.17
+* Fri Jan 20 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.17-1
 - zoom out in TZ map on Escape (#178093)
 
-* Wed Jan 18 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.16
+* Wed Jan 18 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.16-1
 - don't crash when selecting a timezone (#178086, patch by Chris Lumens)
 
-* Tue Jan 17 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.15
+* Tue Jan 17 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.15-1
 - fix setting timezone from firstboot (#177779, patch by Chris Lumens)
 
-* Mon Jan 16 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.14
+* Mon Jan 16 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.14-1
 - put Etc/... timezones into "Non-geographic timezones" (#148025)
 - default to already set timezone on startup (#177815)
 
@@ -312,7 +321,7 @@ fi
 * Mon Jan 09 2006 Chris Lumens <clumens@redhat.com> 1.7.99.13-1
 - Rename mainWindow to scdMainWindow to avoid import problems in firstboot.
 
-* Wed Jan 04 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.12
+* Wed Jan 04 2006 Nils Philippsen <nphilipp@redhat.com> 1.7.99.12-1
 - show actually chosen region, not just something that's in the vicinity
 
 * Fri Dec 30 2005 Nils Philippsen <nphilipp@redhat.com>
@@ -323,18 +332,18 @@ fi
 * Thu Dec 15 2005 Jeremy Katz <katzj@redhat.com> - 1.7.99.11-1
 - fix timezone map to not be painfully slow
 
-* Wed Dec 14 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.10
+* Wed Dec 14 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.10-1
 - make TimezoneMap more easily subclassable (Chris Lumens), use uniform
   paren-spacing
 
-* Thu Dec 08 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.9
+* Thu Dec 08 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.9-1
 - draw frame around highlighted region
 
-* Thu Nov 24 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.8
+* Thu Nov 24 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.8-1
 - reshow shaded map when reentering map widget from outside
 - clear status line when outside region area in zoomed mode
 
-* Thu Nov 24 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.7
+* Thu Nov 24 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.7-1
 - only select region if pointer is inside region
 - replace aa-based shading to avoid aa-related deficiencies of GnomeCanvas
 - show shaded border around zoomed in region to zoom out without selecting a
@@ -343,38 +352,38 @@ fi
 * Wed Nov 23 2005 Nils Philippsen <nphilipp@redhat.com>
 - don't let cities get miraculously lost (#173944, patch by Chris Lumens)
 
-* Mon Nov 21 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.6
+* Mon Nov 21 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.6-1
 - fix zooming problems with enlarged window (#172982)
 - apply workaround by Alex Larsson to avoid hanging when clicking on Asia
   region (#172977)
 - add Middle America region, make Antarctica regions overlapping
 
-* Thu Nov 10 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.5
+* Thu Nov 10 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.5-1
 - when choosing a region, shade off the rest of the map when hovering over a
   region
 
-* Wed Nov 09 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.4
+* Wed Nov 09 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.4-1
 - implement simple timezone zooming
 
-* Fri Oct 21 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.3
+* Fri Oct 21 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.3-1
 - revamp pot file generation (#171330)
 
 * Fri Oct 14 2005 Nils Philippsen <nphilipp@redhat.com>
 - don't use pam_stack (#170623)
 
-* Fri Oct 07 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.2
+* Fri Oct 07 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.2-1
 - write comment about the ZONE parameter into /etc/sysconfig/clock (#123101)
 - handle comments when reading /etc/sysconfig/clock
 - consistently use spaces for indentation in timezoneBackend.py
 
-* Thu Sep 22 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.1
+* Thu Sep 22 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.1-1
 - check whether NTP server is reachable on changes (#135747)
 
 * Tue Aug 09 2005 Nils Philippsen <nphilipp@redhat.com>
 - remove workaround causing deprecation warnings for bug that doesn't exist
   anymore (#162840)
 
-* Thu Aug 04 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.0
+* Thu Aug 04 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.99.0-1
 - add and edit NTP servers inline in the list
 - always display clock left-to-right (#165109)
 - try to be smart about restrict lines when changing or deleting hosts
@@ -387,7 +396,7 @@ fi
 * Wed Aug 03 2005 Nils Philippsen <nphilipp@redhat.com>
 - implement --help, catch unrecognized options (#164791)
 
-* Fri May 06 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.18
+* Fri May 06 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.18-1
 - make desktop file translatable (#156792)
 - avoid DeprecationWarnings
 - use DESTDIR consistently (#156782)
@@ -395,7 +404,7 @@ fi
 * Tue Apr 19 2005 Matthias Clasen <mclasen@redhat.com> 1.7.17-2
 - Silence %%post
 
-* Fri Apr 15 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.17
+* Fri Apr 15 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.17-1
 - make more strings translatable (#154873)
 
 * Fri Apr 01 2005 Nils Philippsen <nphilipp@redhat.com> 1.7.16-2
