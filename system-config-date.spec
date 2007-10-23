@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.14
+Version: 1.9.15
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -102,6 +102,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Tue Oct 23 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.15-1
+- cope with comments in /etc/ntp/step-tickers (#333881)
+
 * Mon Oct 15 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.14-1
 - avoid traceback when neither xdg-open nor htmlview is found
 
