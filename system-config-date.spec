@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.15
+Version: 1.9.16
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -102,6 +102,10 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Tue Oct 30 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.16-1
+- use warning dialog, exit gracefully if hwclock fails to allow operation in a
+  XEN guest (#357311)
+
 * Tue Oct 23 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.15-1
 - cope with comments in /etc/ntp/step-tickers (#333881)
 
