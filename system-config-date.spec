@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.16
+Version: 1.9.17
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -19,6 +19,7 @@ BuildRequires: gettext
 BuildRequires: intltool
 BuildRequires: python
 BuildRequires: anaconda
+BuildRequires: gnome-doc-utils
 Requires: ntp
 Requires: python >= 2.0
 Requires: pygtk2-libglade
@@ -33,9 +34,10 @@ Requires: newt
 %endif
 %if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 7 || 0%{?rhel} >= 6
 Requires: xdg-utils
-%else
-Requires: htmlview
 %endif
+Requires(post): scrollkeeper >= 0:0.3.4
+Requires(postun): scrollkeeper >= 0:0.3.4
+Requires: yelp
 Requires: hicolor-icon-theme
 # system-config-date can act as a plugin to set the time/date, configure NTP or
 # the timezone for firstboot if the latter is present, but doesn't require it.
@@ -71,17 +73,20 @@ touch --no-create %{_datadir}/icons/hicolor
 if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
+%{_bindir}/scrollkeeper-update -q || :
 
 %postun
 touch --no-create %{_datadir}/icons/hicolor
 if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
+%{_bindir}/scrollkeeper-update -q || :
 
 %files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc COPYING
-%doc doc/*
+%doc %{_datadir}/omf/system-config-date
+%doc %{_datadir}/gnome/help/system-config-date
 %{_bindir}/system-config-date
 %{_bindir}/system-config-time
 %{_bindir}/dateconfig
@@ -102,6 +107,13 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Wed Nov 21 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.17-1
+- migrate documentation to yelp/DocBook XML
+- add docs translation rules
+
+* Wed Oct 31 2007 Nils Philippsen <nphilipp@redhat.com>
+- mention XEN/virtualization issues if hwclock fails (#357311)
+
 * Tue Oct 30 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.16-1
 - use warning dialog, exit gracefully if hwclock fails to allow operation in a
   XEN guest (#357311)
