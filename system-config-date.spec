@@ -107,7 +107,10 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
-* Wed Nov 21 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.17-1
+* Thu Nov 22 2007 Nils Philippsen <nphilipp@redhat.com> 1.9.17-1
+- some doc changes
+
+* Wed Nov 21 2007 Nils Philippsen <nphilipp@redhat.com>
 - migrate documentation to yelp/DocBook XML
 - add docs translation rules
 
