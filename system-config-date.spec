@@ -1,6 +1,6 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.18
+Version: 1.9.19
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -33,11 +33,11 @@ Requires: newt-python
 Requires: newt
 %endif
 %if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 7 || 0%{?rhel} >= 6
-Requires: xdg-utils
+#Requires: xdg-utils
 %endif
 Requires(post): scrollkeeper >= 0:0.3.4
 Requires(postun): scrollkeeper >= 0:0.3.4
-Requires: yelp
+#Requires: yelp
 Requires: hicolor-icon-theme
 # system-config-date can act as a plugin to set the time/date, configure NTP or
 # the timezone for firstboot if the latter is present, but doesn't require it.
@@ -107,6 +107,11 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Thu Jan 10 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.19-1
+- only attempt to use yelp to display online help (as xdg-open does just the
+  same), drop requirements on xdg-utils and yelp for now, update error message
+  shown if yelp isn't found (#420101)
+
 * Thu Dec 27 2007 Nils Philippsen <nphilipp@redhat.com> - 1.9.18-1
 - rename sr@Latn to sr@latin (#426591)
 
