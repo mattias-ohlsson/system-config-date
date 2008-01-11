@@ -1,6 +1,26 @@
+# Command line configurables
+
+%if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 7 || 0%{?rhel} >= 6
+%bcond_without xdg_utils
+%else
+%bcond_with xdg_utils
+%endif
+
+%if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 8 || 0%{?rhel} >= 6
+%bcond_without newt_python
+%else
+%bcond_with newt_python
+%endif
+
+%if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 9 || 0%{?rhel} >= 6
+%bcond_without console_util
+%else
+%bcond_with console_util
+%endif
+
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.19
+Version: 1.9.20
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -24,15 +44,19 @@ Requires: ntp
 Requires: python >= 2.0
 Requires: pygtk2-libglade
 Requires: gnome-python2-canvas
+%if 0%{?with_console_util:1}
+Requires: usermode >= 1.94
+%else
 Requires: usermode >= 1.36
+%endif
 Requires: chkconfig
 Requires: rhpl
-%if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 8 || 0%{?rhel} >= 6
+%if 0%{?with_newt_python:1}
 Requires: newt-python
 %else
 Requires: newt
 %endif
-%if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 7 || 0%{?rhel} >= 6
+%if 0%{?with_xdg_utils:1}
 #Requires: xdg-utils
 %endif
 Requires(post): scrollkeeper >= 0:0.3.4
@@ -53,7 +77,7 @@ synchronize the time of the system with an NTP time server.
 %setup -q
 
 %build
-make %{?_smp_mflags}
+make %{?with_console_util:CONSOLE_USE_CONFIG_UTIL=1} %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -107,6 +131,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Fri Jan 11 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.20-1
+- use config-util for userhelper configuration from Fedora 9 on (#428394)
+
 * Thu Jan 10 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.19-1
 - only attempt to use yelp to display online help (as xdg-open does just the
   same), drop requirements on xdg-utils and yelp for now, update error message
