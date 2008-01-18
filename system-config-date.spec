@@ -1,11 +1,5 @@
 # Command line configurables
 
-%if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 7 || 0%{?rhel} >= 6
-%bcond_without xdg_utils
-%else
-%bcond_with xdg_utils
-%endif
-
 %if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 8 || 0%{?rhel} >= 6
 %bcond_without newt_python
 %else
@@ -20,7 +14,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.20
+Version: 1.9.21
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -56,12 +50,8 @@ Requires: newt-python
 %else
 Requires: newt
 %endif
-%if 0%{?with_xdg_utils:1}
-#Requires: xdg-utils
-%endif
 Requires(post): scrollkeeper >= 0:0.3.4
 Requires(postun): scrollkeeper >= 0:0.3.4
-#Requires: yelp
 Requires: hicolor-icon-theme
 # system-config-date can act as a plugin to set the time/date, configure NTP or
 # the timezone for firstboot if the latter is present, but doesn't require it.
@@ -131,6 +121,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Fri Jan 18 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.21-1
+- online help: reorg, make xmllint happy
+
 * Fri Jan 11 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.20-1
 - use config-util for userhelper configuration from Fedora 9 on (#428394)
 
