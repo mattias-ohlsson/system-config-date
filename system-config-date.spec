@@ -12,9 +12,15 @@
 %bcond_with console_util
 %endif
 
+%if 0%{?fedora} < 8 || 0%{?rhel} < 6
+%bcond_without scrollkeeper
+%else
+%bcond_with scrollkeeper
+%endif
+
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.21
+Version: 1.9.22
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -34,6 +40,13 @@ BuildRequires: intltool
 BuildRequires: python
 BuildRequires: anaconda
 BuildRequires: gnome-doc-utils
+BuildRequires: docbook-dtds
+%if %{with scrollkeeper}
+BuildRequires: scrollkeeper
+%else
+BuildRequires: rarian-compat
+%endif
+
 Requires: ntp
 Requires: python >= 2.0
 Requires: pygtk2-libglade
@@ -121,6 +134,12 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Tue Feb 05 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.22-1
+- keep UTC info in /etc/adjtime, drop ARC support (patch by Bill Nottingham)
+
+* Sat Jan 19 2008 Nils Philippsen <nphilipp@redhat.com>
+- add BR: docbook-dtds, scrollkeeper/rarian-compat
+
 * Fri Jan 18 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.21-1
 - online help: reorg, make xmllint happy
 
