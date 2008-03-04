@@ -20,7 +20,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.22
+Version: 1.9.23
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -134,6 +134,10 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Tue Mar 04 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.23-1
+- handle ntpdate service (#229217, patch by Miroslav Lichvar)
+- change all runlevels instead of only 3 and 5
+
 * Tue Feb 05 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.22-1
 - keep UTC info in /etc/adjtime, drop ARC support (patch by Bill Nottingham)
 
