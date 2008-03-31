@@ -20,7 +20,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.26
+Version: 1.9.27
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -134,6 +134,10 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Mon Mar 31 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.27-1
+- handle missing UTC information in /etc/adjtime, disable UTC/non-UTC selection
+  if hwclock doesn't work (#438124)
+
 * Wed Mar 26 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.26-1
 - rename timezones/sr@Latn.po to sr@latin.po (#426591)
 
