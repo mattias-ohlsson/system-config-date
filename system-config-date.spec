@@ -20,7 +20,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.29
+Version: 1.9.30
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -134,6 +134,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Tue Apr 08 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.30-1
+- pick up updated translations
+
 * Mon Apr 07 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.29-1
 - further NTP backend cleanup (#441040)
 
