@@ -20,7 +20,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.31
+Version: 1.9.32
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -134,6 +134,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Tue Jul 01 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.32-1
+- fix Arabic timezone translation (#453202, patch by Muayyad Alsadi)
+
 * Mon May 05 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.31-1
 - translate underscores to spaces when reading in zone names (#444093, patch by
   Jeremy Katz)
