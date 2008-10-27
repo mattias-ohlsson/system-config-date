@@ -21,7 +21,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
 Version: 1.9.32
-Release: 1%{?dist}
+Release: 2%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
 Group: System Environment/Base
@@ -56,6 +56,7 @@ Requires: usermode >= 1.94
 %else
 Requires: usermode >= 1.36
 %endif
+Requires: usermode-gtk
 Requires: chkconfig
 Requires: rhpl
 %if 0%{?with_newt_python:1}
@@ -134,6 +135,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Mon Oct 27 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 1.9.32-2
+- add Requires: usermode-gtk
+
 * Tue Jul 01 2008 Nils Philippsen <nphilipp@redhat.com> - 1.9.32-1
 - fix Arabic timezone translation (#453202, patch by Muayyad Alsadi)
 
