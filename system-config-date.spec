@@ -20,7 +20,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.33
+Version: 1.9.34
 Release: 1%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
@@ -134,6 +134,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Wed Nov 05 2008 Nils Philippsen <nils@redhat.com> - 1.9.34-1
+- avoid map traceback on non-geographic timezones (#467231)
+
 * Thu Oct 30 2008 Nils Philippsen <nils@redhat.com> - 1.9.33-1
 - require usermode-gtk instead of usermode
 
