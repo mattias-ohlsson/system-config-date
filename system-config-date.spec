@@ -21,7 +21,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
 Version: 1.9.34
-Release: 1%{?dist}
+Release: 2%{?dist}
 URL: http://fedoraproject.org/wiki/SystemConfig/date
 License: GPLv2+
 Group: System Environment/Base
@@ -134,6 +134,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Mon Dec 01 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 1.9.34-2
+- Rebuild for Python 2.6
+
 * Wed Nov 05 2008 Nils Philippsen <nils@redhat.com> - 1.9.34-1
 - avoid map traceback on non-geographic timezones (#467231)
 
