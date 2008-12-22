@@ -12,40 +12,27 @@
 %bcond_with console_util
 %endif
 
-%if 0%{?fedora} < 8 || 0%{?rhel} < 6
-%bcond_without scrollkeeper
-%else
-%bcond_with scrollkeeper
-%endif
-
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.34
-Release: 2%{?dist}
-URL: http://fedoraproject.org/wiki/SystemConfig/date
+Version: 1.9.36
+Release: 1%{?dist}
+URL: http://fedorahosted.org/%{name}
 License: GPLv2+
 Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
-# We are upstream, thus the source is only available from within this source
-# package.
-Source0: %{name}-%{version}.tar.bz2
+Source0: http://fedorahosted.org/releases/$(echo %{name} | %{__sed} 's@\(\(.\)\(.\).*\)@\2/\3/\1@')/%{name}-%{version}.tar.bz2
 Obsoletes: timetool < 3.0
 Obsoletes: dateconfig < 1.2
 Obsoletes: timeconfig < 3.2.10
 Obsoletes: redhat-config-date < 1.5.26
+Obsoletes: system-config-date < 1.9.35
+Conflicts: system-config-date < 1.9.35
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: intltool
 BuildRequires: python
 BuildRequires: anaconda
-BuildRequires: gnome-doc-utils
-BuildRequires: docbook-dtds
-%if %{with scrollkeeper}
-BuildRequires: scrollkeeper
-%else
-BuildRequires: rarian-compat
-%endif
 
 Requires: ntp
 Requires: python >= 2.0
@@ -63,8 +50,6 @@ Requires: newt-python
 %else
 Requires: newt
 %endif
-Requires(post): scrollkeeper >= 0:0.3.4
-Requires(postun): scrollkeeper >= 0:0.3.4
 Requires: hicolor-icon-theme
 # system-config-date can act as a plugin to set the time/date, configure NTP or
 # the timezone for firstboot if the latter is present, but doesn't require it.
@@ -100,20 +85,16 @@ touch --no-create %{_datadir}/icons/hicolor
 if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
-%{_bindir}/scrollkeeper-update -q || :
 
 %postun
 touch --no-create %{_datadir}/icons/hicolor
 if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
-%{_bindir}/scrollkeeper-update -q || :
 
 %files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc COPYING
-%doc %{_datadir}/omf/system-config-date
-%doc %{_datadir}/gnome/help/system-config-date
 %{_bindir}/system-config-date
 %{_bindir}/system-config-time
 %{_bindir}/dateconfig
@@ -134,8 +115,17 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
-* Mon Dec 01 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 1.9.34-2
-- Rebuild for Python 2.6
+* Mon Dec 15 2008 Nils Philippsen <nils@redhat.com> - 1.9.36-1
+- remove obsolete "dynamic" keyword (#476046)
+
+* Thu Nov 27 2008 Nils Philippsen <nils@redhat.com> - 1.9.35-1
+- add source URL
+
+* Wed Nov 26 2008 Nils Philippsen <nils@redhat.com>
+- obsolete and conflict with system-config-date < 1.9.35 (docs split)
+
+* Tue Nov 25 2008 Nils Philippsen <nils@redhat.com>
+- prune online documentation
 
 * Wed Nov 05 2008 Nils Philippsen <nils@redhat.com> - 1.9.34-1
 - avoid map traceback on non-geographic timezones (#467231)
