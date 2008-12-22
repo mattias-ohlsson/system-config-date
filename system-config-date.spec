@@ -21,7 +21,7 @@ License: GPLv2+
 Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
-Source0: http://fedorahosted.org/releases/$(echo %{name} | %{__sed} 's@\(\(.\)\(.\).*\)@\2/\3/\1@')/%{name}-%{version}.tar.bz2
+Source0: http://fedorahosted.org/releases/%(echo %{name} | %{__sed} 's@\(\(.\)\(.\).*\)@\2/\3/\1@')/%{name}-%{version}.tar.bz2
 Obsoletes: timetool < 3.0
 Obsoletes: dateconfig < 1.2
 Obsoletes: timeconfig < 3.2.10
@@ -115,7 +115,10 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
-* Mon Dec 15 2008 Nils Philippsen <nils@redhat.com> - 1.9.36-1
+* Mon Dec 22 2008 Nils Philippsen <nils@redhat.com> - 1.9.36-1
+- fix typo in Source0 URL
+
+* Mon Dec 15 2008 Nils Philippsen <nils@redhat.com>
 - remove obsolete "dynamic" keyword (#476046)
 
 * Thu Nov 27 2008 Nils Philippsen <nils@redhat.com> - 1.9.35-1
