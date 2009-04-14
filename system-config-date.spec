@@ -115,7 +115,7 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
-* Tue Apr 14 2008 Nils Philippsen <nils@redhat.com> - 1.9.37-1
+* Tue Apr 14 2009 Nils Philippsen <nils@redhat.com> - 1.9.37-1
 - pick up updated translations
 
 * Mon Dec 22 2008 Nils Philippsen <nils@redhat.com> - 1.9.36-1
