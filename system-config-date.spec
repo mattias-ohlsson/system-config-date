@@ -14,8 +14,8 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.36
-Release: 2%{?dist}
+Version: 1.9.37
+Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
 Group: System Environment/Base
@@ -115,8 +115,8 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
-* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.36-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+* Tue Apr 14 2008 Nils Philippsen <nils@redhat.com> - 1.9.37-1
+- pick up updated translations
 
 * Mon Dec 22 2008 Nils Philippsen <nils@redhat.com> - 1.9.36-1
 - fix typo in Source0 URL
