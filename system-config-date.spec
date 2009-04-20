@@ -14,7 +14,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.37
+Version: 1.9.38
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -115,6 +115,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Mon Apr 20 2009 Nils Philippsen <nils@redhat.com> - 1.9.38-1
+- restore SELinux context of /etc/localtime (#490323, patch by Daniel Walsh)
+
 * Tue Apr 14 2009 Nils Philippsen <nils@redhat.com> - 1.9.37-1
 - pick up updated translations
 
