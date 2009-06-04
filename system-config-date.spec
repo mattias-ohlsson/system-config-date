@@ -15,7 +15,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
 Version: 1.9.38
-Release: 1%{?dist}
+Release: 1%{?dist}.1
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
 Group: System Environment/Base
@@ -32,7 +32,6 @@ BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: intltool
 BuildRequires: python
-BuildRequires: anaconda
 
 Requires: ntp
 Requires: python >= 2.0
@@ -115,6 +114,9 @@ fi
 %config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
+* Thu Jun  4 2009 Dan Horak <dan[at]danny.cz> - 1.9.38-1.1
+- anaconda is not required for build
+
 * Mon Apr 20 2009 Nils Philippsen <nils@redhat.com> - 1.9.38-1
 - restore SELinux context of /etc/localtime (#490323, patch by Daniel Walsh)
 
