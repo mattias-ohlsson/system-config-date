@@ -14,14 +14,14 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.38
-Release: 1%{?dist}.1
+Version: 1.9.39
+Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
 Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
-Source0: http://fedorahosted.org/releases/%(echo %{name} | %{__sed} 's@\(\(.\)\(.\).*\)@\2/\3/\1@')/%{name}-%{version}.tar.bz2
+Source0: http://fedorahosted.org/released/%{name}/%{name}-%{version}.tar.bz2
 Obsoletes: timetool < 3.0
 Obsoletes: dateconfig < 1.2
 Obsoletes: timeconfig < 3.2.10
@@ -33,6 +33,7 @@ BuildRequires: gettext
 BuildRequires: intltool
 BuildRequires: python
 
+Requires: libselinux-python
 Requires: ntp
 Requires: python >= 2.0
 Requires: pygtk2-libglade
@@ -64,7 +65,14 @@ synchronize the time of the system with an NTP time server.
 %setup -q
 
 %build
-make %{?with_console_util:CONSOLE_USE_CONFIG_UTIL=1} %{?_smp_mflags}
+make \
+%if 0%{?fedora} > 0
+    POOL_NTP_ORG_VENDOR=fedora \
+%endif
+%if 0%{?rhel} > 0
+    POOL_NTP_ORG_VENDOR=rhel \
+%endif
+    %{?with_console_util:CONSOLE_USE_CONFIG_UTIL=1} %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -111,11 +119,17 @@ fi
 %config(noreplace) %{_sysconfdir}/pam.d/system-config-time
 %config(noreplace) %{_sysconfdir}/security/console.apps/dateconfig
 %config(noreplace) %{_sysconfdir}/pam.d/dateconfig
-%config(noreplace) %{_sysconfdir}/ntp/ntpservers
 
 %changelog
-* Thu Jun  4 2009 Dan Horak <dan[at]danny.cz> - 1.9.38-1.1
-- anaconda is not required for build
+* Thu Jul 09 2009 Nils Philippsen <nils@redhat.com> - 1.9.39-1
+- use POOL_NTP_ORG_VENDOR in Makefile to set default NTP servers (#510309)
+
+* Thu Jun 04 2009 Nils Philippsen <nils@redhat.com>
+- don't BR: anaconda
+
+* Thu May 28 2009 Nils Philippsen <nils@redhat.com>
+- require libselinux-python
+- use simplified source URL
 
 * Mon Apr 20 2009 Nils Philippsen <nils@redhat.com> - 1.9.38-1
 - restore SELinux context of /etc/localtime (#490323, patch by Daniel Walsh)
