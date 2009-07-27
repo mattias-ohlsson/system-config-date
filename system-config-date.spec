@@ -15,7 +15,7 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
 Version: 1.9.39
-Release: 1%{?dist}
+Release: 2%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
 Group: System Environment/Base
@@ -121,6 +121,9 @@ fi
 %config(noreplace) %{_sysconfdir}/pam.d/dateconfig
 
 %changelog
+* Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.39-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Thu Jul 09 2009 Nils Philippsen <nils@redhat.com> - 1.9.39-1
 - use POOL_NTP_ORG_VENDOR in Makefile to set default NTP servers (#510309)
 
