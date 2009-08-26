@@ -14,8 +14,8 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.39
-Release: 2%{?dist}
+Version: 1.9.40
+Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
 Group: System Environment/Base
@@ -26,8 +26,11 @@ Obsoletes: timetool < 3.0
 Obsoletes: dateconfig < 1.2
 Obsoletes: timeconfig < 3.2.10
 Obsoletes: redhat-config-date < 1.5.26
+# Until version 1.9.34, system-config-date contained online documentation.
+# From version 1.9.35 on, online documentation is split off into its own
+# package system-config-date-docs. The following ensures that updating from
+# earlier versions gives you both the main package and documentation.
 Obsoletes: system-config-date < 1.9.35
-Conflicts: system-config-date < 1.9.35
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: intltool
@@ -121,8 +124,15 @@ fi
 %config(noreplace) %{_sysconfdir}/pam.d/dateconfig
 
 %changelog
-* Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.39-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+* Wed Aug 26 2009 Nils Philippsen <nils@redhat.com> - 1.9.40-1
+- explain obsoleting old versions
+
+* Wed Jul 29 2009 Nils Philippsen <nils@redhat.com>
+- improve manual and NTP settings (#507619)
+- improve frames and expander (#507623)
+- display current date and time always
+- fix explanation labels on "Date and Time" page
+- fix non-zero page size deprecation warnings
 
 * Thu Jul 09 2009 Nils Philippsen <nils@redhat.com> - 1.9.39-1
 - use POOL_NTP_ORG_VENDOR in Makefile to set default NTP servers (#510309)
