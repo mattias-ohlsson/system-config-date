@@ -14,7 +14,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.40
+Version: 1.9.41
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -47,7 +47,6 @@ Requires: usermode-gtk >= 1.94
 Requires: usermode-gtk >= 1.36
 %endif
 Requires: chkconfig
-Requires: rhpl
 %if 0%{?with_newt_python:1}
 Requires: newt-python
 %else
@@ -124,6 +123,9 @@ fi
 %config(noreplace) %{_sysconfdir}/pam.d/dateconfig
 
 %changelog
+* Wed Aug 26 2009 Nils Philippsen <nils@redhat.com> - 1.9.41-1
+- use gettext instead of rhpl
+
 * Wed Aug 26 2009 Nils Philippsen <nils@redhat.com> - 1.9.40-1
 - explain obsoleting old versions
 
