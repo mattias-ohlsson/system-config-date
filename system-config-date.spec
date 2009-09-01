@@ -14,7 +14,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.44
+Version: 1.9.45
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -123,6 +123,9 @@ fi
 %config(noreplace) %{_sysconfdir}/pam.d/dateconfig
 
 %changelog
+* Fri Aug 28 2009 Nils Philippsen <nils@redhat.com> - 1.9.45-1
+- initialize gettext correctly
+
 * Fri Aug 28 2009 Nils Philippsen <nils@redhat.com> - 1.9.44-1
 - don't unnecessarily initialize gettext
 
