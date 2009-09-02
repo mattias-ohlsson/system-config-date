@@ -14,7 +14,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.46
+Version: 1.9.47
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -125,6 +125,9 @@ fi
 %config(noreplace) %{_sysconfdir}/pam.d/dateconfig
 
 %changelog
+* Wed Sep 02 2009 Nils Philippsen <nils@redhat.com> - 1.9.47-1
+- appease anaconda (#520799)
+
 * Wed Sep 02 2009 Nils Philippsen <nils@redhat.com> - 1.9.46-1
 - use new gtk toolkit API
 
