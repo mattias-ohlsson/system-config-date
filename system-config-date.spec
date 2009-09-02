@@ -126,7 +126,7 @@ fi
 
 %changelog
 * Wed Sep 02 2009 Nils Philippsen <nils@redhat.com> - 1.9.47-1
-- appease anaconda (#520799)
+- import gettext from each module again (#520799)
 
 * Wed Sep 02 2009 Nils Philippsen <nils@redhat.com> - 1.9.46-1
 - use new gtk toolkit API
