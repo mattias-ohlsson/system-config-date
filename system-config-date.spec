@@ -14,7 +14,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.45
+Version: 1.9.46
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -39,6 +39,8 @@ BuildRequires: python
 Requires: libselinux-python
 Requires: ntp
 Requires: python >= 2.0
+Requires: python-slip >= 0.2.3
+Requires: pygtk2 >= 2.12.0
 Requires: pygtk2-libglade
 Requires: gnome-python2-canvas
 %if 0%{?with_console_util:1}
@@ -123,6 +125,13 @@ fi
 %config(noreplace) %{_sysconfdir}/pam.d/dateconfig
 
 %changelog
+* Wed Sep 02 2009 Nils Philippsen <nils@redhat.com> - 1.9.46-1
+- use new gtk toolkit API
+
+* Tue Sep 01 2009 Nils Philippsen <nils@redhat.com>
+- use slip.util.files.linkorcopyfile() (#512046)
+- initialize gettext correctly in all places
+
 * Fri Aug 28 2009 Nils Philippsen <nils@redhat.com> - 1.9.45-1
 - initialize gettext correctly
 
