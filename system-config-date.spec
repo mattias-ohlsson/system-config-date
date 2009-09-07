@@ -38,6 +38,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: intltool
 BuildRequires: python
+BuildRequires: python-devel
 
 Requires: libselinux-python
 Requires: ntp
