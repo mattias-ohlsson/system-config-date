@@ -1,3 +1,6 @@
+%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(0)")}
+%{!?python_version: %global python_version %(%{__python} -c "from distutils.sysconfig import get_python_version; print get_python_version()")}
+
 # Command line configurables
 
 %if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 8 || 0%{?rhel} >= 6
@@ -14,7 +17,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.47
+Version: 1.9.48
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -107,9 +110,6 @@ fi
 %defattr(-,root,root,-)
 %doc COPYING
 %{_bindir}/system-config-date
-%{_bindir}/system-config-time
-%{_bindir}/dateconfig
-%{_sbindir}/timeconfig
 %{_datadir}/system-config-date
 %{_datadir}/applications/system-config-date.desktop
 %{_datadir}/system-config-date/pixmaps/system-config-date.png
@@ -119,17 +119,21 @@ fi
 %{_mandir}/ja/man8/system-config-date*
 %config(noreplace) %{_sysconfdir}/security/console.apps/system-config-date
 %config(noreplace) %{_sysconfdir}/pam.d/system-config-date
-%config(noreplace) %{_sysconfdir}/security/console.apps/system-config-time
-%config(noreplace) %{_sysconfdir}/pam.d/system-config-time
-%config(noreplace) %{_sysconfdir}/security/console.apps/dateconfig
-%config(noreplace) %{_sysconfdir}/pam.d/dateconfig
+%{python_sitelib}/scdate
+%{python_sitelib}/scdate-%{version}-py%{python_version}.egg-info
+#%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Mon Sep 07 2009 Nils Philippsen <nils@redhat.com> - 1.9.48-1
+- use string object methods instead of string module
+- get rid of timeconfig and compat program names
+- move backend code into scdate.core module
+
 * Wed Sep 02 2009 Nils Philippsen <nils@redhat.com> - 1.9.47-1
 - import gettext from each module again (#520799)
 
 * Wed Sep 02 2009 Nils Philippsen <nils@redhat.com> - 1.9.46-1
-- use new gtk toolkit API
+- use new gtk tooltip API
 
 * Tue Sep 01 2009 Nils Philippsen <nils@redhat.com>
 - use slip.util.files.linkorcopyfile() (#512046)
