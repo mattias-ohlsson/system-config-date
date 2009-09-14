@@ -17,7 +17,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.48
+Version: 1.9.49
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -125,6 +125,9 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Mon Sep 14 2009 Nils Philippsen <nils@redhat.com> - 1.9.49-1
+- pick up updated translations
+
 * Mon Sep 07 2009 Nils Philippsen <nils@redhat.com> - 1.9.48-1
 - use string object methods instead of string module
 - get rid of timeconfig and compat program names
