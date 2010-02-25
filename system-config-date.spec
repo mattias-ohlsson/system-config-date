@@ -17,7 +17,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.53
+Version: 1.9.54
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -25,10 +25,6 @@ Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 Source0: http://fedorahosted.org/released/%{name}/%{name}-%{version}.tar.bz2
-Obsoletes: timetool < 3.0
-Obsoletes: dateconfig < 1.2
-Obsoletes: timeconfig < 3.2.10
-Obsoletes: redhat-config-date < 1.5.26
 # Until version 1.9.34, system-config-date contained online documentation.
 # From version 1.9.35 on, online documentation is split off into its own
 # package system-config-date-docs. The following ensures that updating from
@@ -40,7 +36,6 @@ BuildRequires: intltool
 BuildRequires: python
 BuildRequires: python-devel
 
-Requires: libselinux-python
 Requires: ntp
 Requires: python >= 2.0
 Requires: python-slip >= 0.2.3
@@ -113,7 +108,6 @@ fi
 %{_bindir}/system-config-date
 %{_datadir}/system-config-date
 %{_datadir}/applications/system-config-date.desktop
-%{_datadir}/system-config-date/pixmaps/system-config-date.png
 %{_datadir}/icons/hicolor/48x48/apps/system-config-date.png
 %{_mandir}/man8/system-config-date*
 %{_mandir}/fr/man8/system-config-date*
@@ -125,6 +119,14 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Thu Feb 25 2010 Nils Philippsen <nils@redhat.com> - 1.9.54-1
+- remove obsolete obsolete lines
+- remove duplicate file listing
+
+* Mon Feb 08 2010 Nils Philippsen <nils@redhat.com>
+- don't require libselinux-python directly anymore, this code was moved to
+  slip.util.files (#562331)
+
 * Tue Oct 20 2009 Nils Philippsen <nils@redhat.com> - 1.9.53-1
 - make translating time zones more robust (#525921)
 
