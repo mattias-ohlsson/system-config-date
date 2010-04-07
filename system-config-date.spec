@@ -17,7 +17,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.55
+Version: 1.9.56
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -119,6 +119,9 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Wed Apr 07 2010 Nils Philippsen <nils@redhat.com> - 1.9.56-1
+- pick up translation updates
+
 * Tue Mar 23 2010 Nils Philippsen <nils@redhat.com> - 1.9.55-1
 - pick up translation updates
 
