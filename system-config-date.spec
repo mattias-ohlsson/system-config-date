@@ -17,7 +17,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.56
+Version: 1.9.57
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -108,7 +108,7 @@ fi
 %{_bindir}/system-config-date
 %{_datadir}/system-config-date
 %{_datadir}/applications/system-config-date.desktop
-%{_datadir}/icons/hicolor/48x48/apps/system-config-date.png
+%{_datadir}/icons/hicolor/*/apps/system-config-date.*
 %{_mandir}/man8/system-config-date*
 %{_mandir}/fr/man8/system-config-date*
 %{_mandir}/ja/man8/system-config-date*
@@ -119,6 +119,13 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Thu Apr 22 2010 Nils Philippsen <nils@redhat.com> - 1.9.57-1
+- use themed icon for window
+
+* Wed Apr 21 2010 Nils Philippsen <nils@redhat.com>
+- use new icons matching the rest of the icon theme (#583802, provided by Lapo
+  Calamandrei)
+
 * Wed Apr 07 2010 Nils Philippsen <nils@redhat.com> - 1.9.56-1
 - pick up translation updates
 
