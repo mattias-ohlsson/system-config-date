@@ -17,7 +17,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.57
+Version: 1.9.58
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -119,6 +119,13 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Tue Jun 22 2010 Nils Philippsen <nils@redhat.com> - 1.9.58-1
+- pick up additional translations
+
+* Mon Jun 14 2010 Nils Philippsen <nils@redhat.com>
+- use better ugettext to allow anaconda to use the time zone widget even with
+  encodings other than UTF-8
+
 * Thu Apr 22 2010 Nils Philippsen <nils@redhat.com> - 1.9.57-1
 - use themed icon for window
 
