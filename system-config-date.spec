@@ -15,9 +15,16 @@
 %bcond_with console_util
 %endif
 
+# Enterprise versions pull in docs automatically
+%if 0%{?rhel} > 0
+%bcond_without require_docs
+%else
+%bcond_with require_docs
+%endif
+
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.58
+Version: 1.9.59
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -30,6 +37,9 @@ Source0: http://fedorahosted.org/released/%{name}/%{name}-%{version}.tar.bz2
 # package system-config-date-docs. The following ensures that updating from
 # earlier versions gives you both the main package and documentation.
 Obsoletes: system-config-date < 1.9.35
+%if %{with require_docs}
+Requires: system-config-date-docs
+%endif
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: intltool
@@ -38,7 +48,7 @@ BuildRequires: python-devel
 
 Requires: ntp
 Requires: python >= 2.0
-Requires: python-slip >= 0.2.3
+Requires: python-slip >= 0.2.11
 Requires: pygtk2 >= 2.12.0
 Requires: pygtk2-libglade
 Requires: gnome-python2-canvas
@@ -119,6 +129,12 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Wed Jun 30 2010 Nils Philippsen <nils@redhat.com> - 1.9.59-1
+- require docs in enterprise builds
+- configure iburst mode instead of ntpdate upon boot (original patch by Radek
+  Nováček)
+- fix configuring ntp.conf template
+
 * Tue Jun 22 2010 Nils Philippsen <nils@redhat.com> - 1.9.58-1
 - pick up additional translations
 
