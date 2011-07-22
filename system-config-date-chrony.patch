@@ -1,0 +1,389 @@
+commit 143338f6d82ae05a1c6e56bc50fca0fa21125e58
+Author: Miroslav Lichvar <mlichvar@redhat.com>
+Date:   Fri Jul 15 14:42:43 2011 +0200
+
+    add support for chrony
+
+diff --git a/src/date_gui.py b/src/date_gui.py
+index ddca9ab..89d7391 100644
+--- a/src/date_gui.py
++++ b/src/date_gui.py
+@@ -2,7 +2,7 @@
+ #
+ # date_gui - Program creates a user interface
+ #            that allows the system time, system date,
+-#            time zone, and ntpd configuration to be easily set
++#            time zone, and ntpd/chronyd configuration to be easily set
+ #
+ # Copyright © 2002-2006, 2009, 2010 Red Hat, Inc.
+ # Copyright © 2001-2003 Brent Fox <bfox@redhat.com>
+@@ -142,44 +142,49 @@ class datePage(object):
+         self.ntpSrvDelButton.connect ("clicked", self.ntpSrvDelButtonClicked)
+         self.ntpSrvDelButton.set_sensitive (False)
+ 
+-        #Find out if ntpd is currently running.  If so, activate checkbox
+-        ntpStatus = scdMainWindow.dateBackend.isNtpRunning()
+-        if ntpStatus == 1:
+-            self.ntpCheckButton.set_active(True)
+-        elif ntpStatus == None:
+-            text = (_("The NTP initscript (%s) does not seem to be functioning "
+-                      "properly.  Try running 'rpm -V ntp' to see if the initscript "
+-                      "has been modified.  system-config-date will exit now.")
+-                      % '/etc/rc.d/init.d/ntpd')
+-            dlg = gtk.MessageDialog(None, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, text)
++        if scdMainWindow.dateBackend.getNtpService() == None:
++            # no supported NTP service is installed, disable the checkbox
++            self.ntpCheckButton.set_sensitive(False)
++        else:
++            #Find out if NTP service is currently running.  If so, activate checkbox
++            ntpStatus = scdMainWindow.dateBackend.isNtpRunning()
++
++            if ntpStatus == 1:
++                self.ntpCheckButton.set_active(True)
++            elif ntpStatus == None:
++                text = (_("The NTP initscript (%s) does not seem to be functioning "
++                          "properly.  Try running 'rpm -V ntp' to see if the initscript "
++                          "has been modified.  system-config-date will exit now.")
++                          % '/etc/rc.d/init.d/ntpd')
++                dlg = gtk.MessageDialog(None, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, text)
+ 
+-            dlg.set_title(_("Error"))
+-            dlg.set_default_size(100, 100)
+-            dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
+-            dlg.set_border_width(2)
+-            dlg.set_modal(True)
+-            rc = dlg.run()
+-            dlg.destroy()
++                dlg.set_title(_("Error"))
++                dlg.set_default_size(100, 100)
++                dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
++                dlg.set_border_width(2)
++                dlg.set_modal(True)
++                rc = dlg.run()
++                dlg.destroy()
+ 
+-            import os
+-            os._exit(1)
++                import os
++                os._exit(1)
+ 
+-        ntpBroadcastClient = scdMainWindow.dateBackend.getNtpBroadcastClient()
+-        #print "ntpBroadcastClient = " + str (ntpBroadcastClient)
+-        self.ntpBroadcastClientCheckButton.set_active(ntpBroadcastClient)
++            ntpBroadcastClient = scdMainWindow.dateBackend.getNtpBroadcastClient()
++            #print "ntpBroadcastClient = " + str (ntpBroadcastClient)
++            self.ntpBroadcastClientCheckButton.set_active(ntpBroadcastClient)
+ 
+-        (self.ntpServers, self.ntpLocalTimeSource) = scdMainWindow.dateBackend.getNtpServers ()
++            (self.ntpServers, self.ntpLocalTimeSource) = scdMainWindow.dateBackend.getNtpServers ()
+ 
+-        self.ntpLocalTimeSourceButton.set_active (self.ntpLocalTimeSource)
++            self.ntpLocalTimeSourceButton.set_active (self.ntpLocalTimeSource)
+ 
+-        self.ntpIburst = scdMainWindow.dateBackend.getIburst ()
++            self.ntpIburst = scdMainWindow.dateBackend.getIburst ()
+ 
+-        self.ntpIburstButton.set_active (self.ntpIburst)
++            self.ntpIburstButton.set_active (self.ntpIburst)
+ 
+-        self.ntpListStore.clear ()
+-        for ntpServer in self.ntpServers:
+-            iter = self.ntpListStore.append ()
+-            self.ntpListStore.set_value (iter, self.NTPSERVER, ntpServer)
++            self.ntpListStore.clear ()
++            for ntpServer in self.ntpServers:
++                iter = self.ntpListStore.append ()
++                self.ntpListStore.set_value (iter, self.NTPSERVER, ntpServer)
+ 
+         self.ntpCheckButtonClicked ()
+ 
+diff --git a/src/scdate/core/dateBackend.py b/src/scdate/core/dateBackend.py
+index 7498709..d00faf7 100644
+--- a/src/scdate/core/dateBackend.py
++++ b/src/scdate/core/dateBackend.py
+@@ -35,10 +35,13 @@ from slip.util.files import overwrite_safely
+ class dateBackend(object):
+ 
+     def __init__(self):
++        self.ntpService = None
++        self.ntpConfig = None
+         self.ntpFile = None
+         self.ntpServers = None
+         self.ntpBroadcastClient = False
+         self.ntpLocalTimeSource = False
++        self.selectNtpService()
+         self.readNtpConf()
+         self.getNtpServers()
+         pass
+@@ -69,13 +72,14 @@ class dateBackend(object):
+ 
+     def writeNtpConfig (self, ntpServers, ntpBroadcastClient, ntpLocalTimeSource, ntpIburst):
+         broadcastclientFound = False
++        localstratumFound = False
+         ntpFileList = []
+ 
+         servers = []
+         for server in ntpServers:
+             if server not in servers:
+                 servers.append (server)
+-        if ntpLocalTimeSource and "127.127.1.0" not in servers:
++        if ntpLocalTimeSource and self.ntpService == "ntpd" and "127.127.1.0" not in servers:
+             servers.append ("127.127.1.0")
+ 
+         serversfound = []
+@@ -84,15 +88,17 @@ class dateBackend(object):
+         # empty
+         if self.ntpFile and len (self.ntpFile) > 0:
+             lines = self.ntpFile
+-        else:
++        elif self.ntpService == "ntpd":
+             fd = open("/usr/share/system-config-date/ntp.conf.template", "r")
+             lines = fd.readlines()
+             fd.close ()
++        else:
++            lines = []
+ 
+         for line in lines:
+             tokens = line.split ()
+-            if len (tokens) == 0 or tokens[0][0] == "#":
+-                # empty line or comment, copy verbatim
++            if len (tokens) == 0:
++                # empty line, copy verbatim
+                 ntpFileList.append (line)
+ 
+             elif tokens[0] == "server":
+@@ -117,6 +123,13 @@ class dateBackend(object):
+                     broadcastclientFound = 1
+                 else:
+                     ntpFileList.append(line)
++            elif tokens[0] in ("local", "#local") and len(tokens) > 1 and tokens[1] == "stratum":
++                localstratumFound = 1
++                if ntpLocalTimeSource:
++                    tokens[0] = "local"
++                else:
++                    tokens[0] = "#local"
++                ntpFileList.append(" ".join(tokens) + "\n")
+             else:
+                 #This is not the server line, so just add it to the list
+                 ntpFileList.append(line)
+@@ -131,9 +144,12 @@ class dateBackend(object):
+         if not broadcastclientFound and ntpBroadcastClient:
+             ntpFileList.append("broadcastclient\n")
+ 
++        if ntpLocalTimeSource and self.ntpService == "chronyd" and not localstratumFound:
++            ntpFileList.append("local stratum 10")
++
+         #Now that we've got the list of data, open the file and write it out
+         try:
+-            overwrite_safely("/etc/ntp.conf", "".join(ntpFileList))
++            overwrite_safely(self.ntpConfig, "".join(ntpFileList))
+         except Exception, e:
+             print >>sys.stderr, e
+             return
+@@ -183,52 +199,74 @@ class dateBackend(object):
+ 
+         return 0
+ 
++    def selectNtpService(self):
++        # select chronyd or ntpd service, based on which on is installed
++        # and enabled, prefer chronyd if both are installed and disabled
++        for command in ['/sbin/chkconfig ', '/sbin/chkconfig --list ']:
++            if os.system(command + "chronyd > /dev/null 2> /dev/null") == 0:
++                self.ntpService = "chronyd"
++                self.ntpConfig = "/etc/chrony.conf"
++                return
++            if os.system(command + "ntpd > /dev/null 2> /dev/null") == 0:
++                self.ntpService = "ntpd"
++                self.ntpConfig = "/etc/ntp.conf"
++                return
++
+     def startNtpService (self, wait):
++        if self.ntpService == None:
++            return
+         if self.isNtpRunning() == 1:
+-            fullPath = '/sbin/service ntpd restart > /dev/null'
++            fullPath = '/sbin/service ' + self.ntpService + ' restart > /dev/null'
+         else:
+-            fullPath = '/sbin/service ntpd start > /dev/null'
+-        path = "/sbin/service"
+-        args = [path, "ntpd", "restart"]
++            fullPath = '/sbin/service ' + self.ntpService + ' start > /dev/null'
+ 
+         retval = os.system(fullPath)
+         return retval
+ 
+     def chkconfigOn(self):
+-        path = ('/sbin/chkconfig --level 2345 ntpd on')
++        if self.ntpService == None:
++            return
++        path = ('/sbin/chkconfig --level 2345 ' + self.ntpService + ' on')
+         os.system (path)
+ 
+     def chkconfigOff(self):
+-        path = ('/sbin/chkconfig --level 2345 ntpd off')
++        if self.ntpService == None:
++            return
++        path = ('/sbin/chkconfig --level 2345 ' + self.ntpService + ' off')
+         os.system (path)
+ 
+     def stopNtpService (self):
++        if self.ntpService == None:
++            return
+         if self.isNtpRunning() == 1:
+-            path = ('/sbin/service ntpd stop > /dev/null')
++            path = ('/sbin/service ' + self.ntpService + ' stop > /dev/null')
+             os.system (path)
+             self.chkconfigOff ()
+ 
+     def isNtpRunning (self):
+-        if not os.access("/etc/ntp.conf", os.R_OK):
++        if not os.access(self.ntpConfig, os.R_OK):
+             #The file doesn't exist, so return
+             return 0
+ 
+-        command = ('/sbin/service ntpd status > /dev/null')
++        command = ('/sbin/service ' + self.ntpService + ' status > /dev/null')
+ 
+         result = os.system(command)
+ 
+         try:
+             if result == 0:
+-                #ntpd is running
++                #service is running
+                 return 1
+             else:
+-                #ntpd is stopped
++                #service is stopped
+                 return 0
+         except:
+             #we cannot parse the output of the initscript
+             #the initscript is busted, so disable ntp
+             return None
+ 
++    def getNtpService (self):
++        return self.ntpService
++
+     def getNtpServers (self):
+         self.ntpServers = []
+         self.ntpLocalTimeSource = False
+@@ -251,6 +289,8 @@ class dateBackend(object):
+                         # They have a server line in /etc/ntp.conf with no
+                         # server specified
+                         pass
++                elif tokens[0] == "local" and len(tokens) > 1 and tokens[1] == "stratum":
++                    self.ntpLocalTimeSource = True
+ 
+         return (self.ntpServers, self.ntpLocalTimeSource)
+ 
+@@ -280,7 +320,7 @@ class dateBackend(object):
+ 
+     def readNtpConf(self):
+         try:
+-            fd = open('/etc/ntp.conf', 'r')
++            fd = open(self.ntpConfig, 'r')
+             self.ntpFile = fd.readlines()
+             fd.close()
+         except:
+diff --git a/system-config-date.spec b/system-config-date.spec
+index 04ecd6e..542f5ed 100644
+--- a/system-config-date.spec
++++ b/system-config-date.spec
+@@ -46,7 +46,6 @@ BuildRequires: intltool
+ BuildRequires: python
+ BuildRequires: python-devel
+ 
+-Requires: ntp
+ Requires: python >= 2.0
+ Requires: python-slip >= 0.2.11
+ Requires: pygtk2 >= 2.12.0
+commit a27d4ac8ccc827c1cb6b74fd9fd3e01fa3e5c486
+Author: Miroslav Lichvar <mlichvar@redhat.com>
+Date:   Fri Jul 15 15:46:28 2011 +0200
+
+    use systemctl to manage NTP services
+
+diff --git a/src/scdate/core/dateBackend.py b/src/scdate/core/dateBackend.py
+index d00faf7..01ce952 100644
+--- a/src/scdate/core/dateBackend.py
++++ b/src/scdate/core/dateBackend.py
+@@ -200,15 +200,15 @@ class dateBackend(object):
+         return 0
+ 
+     def selectNtpService(self):
+-        # select chronyd or ntpd service, based on which on is installed
+-        # and enabled, prefer chronyd if both are installed and disabled
+-        for command in ['/sbin/chkconfig ', '/sbin/chkconfig --list ']:
+-            if os.system(command + "chronyd > /dev/null 2> /dev/null") == 0:
+-                self.ntpService = "chronyd"
++        # select chronyd or ntpd service, based on which is enabled or
++        # installed, prefer chronyd if both are installed and disabled
++        for command in ['/bin/systemctl is-enabled ', 'test -a /lib/systemd/system/']:
++            if os.system(command + "chronyd.service > /dev/null 2> /dev/null") == 0:
++                self.ntpService = "chronyd.service"
+                 self.ntpConfig = "/etc/chrony.conf"
+                 return
+-            if os.system(command + "ntpd > /dev/null 2> /dev/null") == 0:
+-                self.ntpService = "ntpd"
++            if os.system(command + "ntpd.service > /dev/null 2> /dev/null") == 0:
++                self.ntpService = "ntpd.service"
+                 self.ntpConfig = "/etc/ntp.conf"
+                 return
+ 
+@@ -216,9 +216,9 @@ class dateBackend(object):
+         if self.ntpService == None:
+             return
+         if self.isNtpRunning() == 1:
+-            fullPath = '/sbin/service ' + self.ntpService + ' restart > /dev/null'
++            fullPath = '/bin/systemctl restart ' + self.ntpService
+         else:
+-            fullPath = '/sbin/service ' + self.ntpService + ' start > /dev/null'
++            fullPath = '/bin/systemctl start ' + self.ntpService
+ 
+         retval = os.system(fullPath)
+         return retval
+@@ -226,20 +226,20 @@ class dateBackend(object):
+     def chkconfigOn(self):
+         if self.ntpService == None:
+             return
+-        path = ('/sbin/chkconfig --level 2345 ' + self.ntpService + ' on')
++        path = '/bin/systemctl enable ' + self.ntpService
+         os.system (path)
+ 
+     def chkconfigOff(self):
+         if self.ntpService == None:
+             return
+-        path = ('/sbin/chkconfig --level 2345 ' + self.ntpService + ' off')
++        path = '/bin/systemctl disable ' + self.ntpService
+         os.system (path)
+ 
+     def stopNtpService (self):
+         if self.ntpService == None:
+             return
+         if self.isNtpRunning() == 1:
+-            path = ('/sbin/service ' + self.ntpService + ' stop > /dev/null')
++            path = '/bin/systemctl stop ' + self.ntpService
+             os.system (path)
+             self.chkconfigOff ()
+ 
+@@ -248,7 +248,7 @@ class dateBackend(object):
+             #The file doesn't exist, so return
+             return 0
+ 
+-        command = ('/sbin/service ' + self.ntpService + ' status > /dev/null')
++        command = '/bin/systemctl -q is-active ' + self.ntpService
+ 
+         result = os.system(command)
+ 
+diff --git a/system-config-date.spec b/system-config-date.spec
+index 542f5ed..51f620d 100644
+--- a/system-config-date.spec
++++ b/system-config-date.spec
+@@ -56,7 +56,7 @@ Requires: usermode-gtk >= 1.94
+ %else
+ Requires: usermode-gtk >= 1.36
+ %endif
+-Requires: chkconfig
++Requires: systemd-units
+ %if 0%{?with_newt_python:1}
+ Requires: newt-python
+ %else

@@ -25,13 +25,14 @@
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
 Version: 1.9.61
-Release: 2%{?dist}
+Release: 3%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
 Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 Source0: http://fedorahosted.org/released/%{name}/%{name}-%{version}.tar.bz2
+Patch0: system-config-date-chrony.patch
 # Until version 1.9.34, system-config-date contained online documentation.
 # From version 1.9.35 on, online documentation is split off into its own
 # package system-config-date-docs. The following ensures that updating from
@@ -46,7 +47,6 @@ BuildRequires: intltool
 BuildRequires: python
 BuildRequires: python-devel
 
-Requires: ntp
 Requires: python >= 2.0
 Requires: python-slip >= 0.2.11
 Requires: pygtk2 >= 2.12.0
@@ -57,7 +57,7 @@ Requires: usermode-gtk >= 1.94
 %else
 Requires: usermode-gtk >= 1.36
 %endif
-Requires: chkconfig
+Requires: systemd-units
 %if 0%{?with_newt_python:1}
 Requires: newt-python
 %else
@@ -76,6 +76,7 @@ synchronize the time of the system with an NTP time server.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 make \
@@ -129,6 +130,9 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Thu Jul 21 2011 Miroslav Lichvar <mlichvar@redhat.com> - 1.9.61-3
+- add support for chrony (#616385)
+
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.61-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
