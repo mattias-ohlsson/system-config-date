@@ -22,17 +22,23 @@
 %bcond_with require_docs
 %endif
 
+# Use systemd instead of traditional init
+%if ! 0%{?fedora}%{?rhel} || 0%{?fedora} >= 15 || 0%{?rhel} >= 7
+%bcond_without systemd
+%else
+%bcond_with systemd
+%endif
+
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.61
-Release: 3%{?dist}
+Version: 1.9.63
+Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
 Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 Source0: http://fedorahosted.org/released/%{name}/%{name}-%{version}.tar.bz2
-Patch0: system-config-date-chrony.patch
 # Until version 1.9.34, system-config-date contained online documentation.
 # From version 1.9.35 on, online documentation is split off into its own
 # package system-config-date-docs. The following ensures that updating from
@@ -52,13 +58,19 @@ Requires: python-slip >= 0.2.11
 Requires: pygtk2 >= 2.12.0
 Requires: pygtk2-libglade
 Requires: gnome-python2-canvas
-%if 0%{?with_console_util:1}
+%if %{with console_util}
 Requires: usermode-gtk >= 1.94
 %else
 Requires: usermode-gtk >= 1.36
 %endif
+
+%if %{with systemd}
 Requires: systemd-units
-%if 0%{?with_newt_python:1}
+%else
+Requires: chkconfig
+%endif
+
+%if %{with newt_python}
 Requires: newt-python
 %else
 Requires: newt
@@ -76,7 +88,6 @@ synchronize the time of the system with an NTP time server.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 make \
@@ -86,7 +97,10 @@ make \
 %if 0%{?rhel} > 0
     POOL_NTP_ORG_VENDOR=rhel \
 %endif
-    %{?with_console_util:CONSOLE_USE_CONFIG_UTIL=1} %{?_smp_mflags}
+%if %{with console_util}
+    CONSOLE_USE_CONFIG_UTIL=1 \
+%endif
+    %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -130,11 +144,19 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
-* Thu Jul 21 2011 Miroslav Lichvar <mlichvar@redhat.com> - 1.9.61-3
-- add support for chrony (#616385)
+* Fri Aug 19 2011 Nils Philippsen <nils@redhat.com> - 1.9.63-1
+- don't bail out if ntpdate can't be run (#731667)
+- cope with systemd or SysVinit, alternatively
 
-* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.61-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+* Tue Aug 16 2011 Nils Philippsen <nils@redhat.com> - 1.9.63-1
+- add support for chrony (#616385, patch by Miroslav Lichvár)
+
+* Tue Aug 16 2011 Nils Philippsen <nils@redhat.com> - 1.9.62-1
+- improve building/cleaning message files (Martin Pitt)
+- properly tie dialogs to toplevels, set slightly better dialog titles, set
+  dialogs transient for notebook due to firstboot (#528157)
+- use branded name in desktop file (#727204)
+- use Transifex and pull updated translations
 
 * Tue Aug 24 2010 Nils Philippsen <nils@redhat.com> - 1.9.61-1
 - pick up updated translations
