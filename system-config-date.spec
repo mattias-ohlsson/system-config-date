@@ -31,7 +31,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.63
+Version: 1.9.64
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -144,6 +144,9 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Tue Aug 23 2011 Nils Philippsen <nils@redhat.com> - 1.9.64-1
+- pull updated translations
+
 * Fri Aug 19 2011 Nils Philippsen <nils@redhat.com> - 1.9.63-1
 - don't bail out if ntpdate can't be run (#731667)
 - cope with systemd or SysVinit, alternatively
