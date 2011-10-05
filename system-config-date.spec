@@ -31,7 +31,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.65
+Version: 1.9.66
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -144,6 +144,11 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Wed Oct 05 2011 Nils Philippsen <nils@redhat.com> - 1.9.66-1
+- improve enabling/disabling, starting/stopping NTP daemons, take care of the
+  respective "other" NTP daemon as well (#743533)
+- pull updated translations
+
 * Fri Sep 09 2011 Nils Philippsen <nils@redhat.com> - 1.9.65-1
 - cope with neither ntpd nor chrony being installed (#734993)
 - pull updated translations
