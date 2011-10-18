@@ -31,7 +31,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.66
+Version: 1.9.67
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -144,6 +144,10 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Tue Oct 18 2011 Nils Philippsen <nils@redhat.com> - 1.9.67-1
+- enable tree lines in TZ treeview (#746731)
+- pull updated translations
+
 * Wed Oct 05 2011 Nils Philippsen <nils@redhat.com> - 1.9.66-1
 - improve enabling/disabling, starting/stopping NTP daemons, take care of the
   respective "other" NTP daemon as well (#743533)
