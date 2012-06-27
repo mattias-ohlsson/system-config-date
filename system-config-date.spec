@@ -92,7 +92,7 @@ synchronize the time of the system with an NTP time server.
 %build
 make \
 %if 0%{?fedora} > 0
-    POOL_NTP_ORG_VENDOR=fedora \
+    POOL_NTP_ORG_VENDOR=ipredia \
 %endif
 %if 0%{?rhel} > 0
     POOL_NTP_ORG_VENDOR=rhel \
