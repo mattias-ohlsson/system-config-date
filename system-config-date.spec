@@ -39,6 +39,8 @@ Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 Source0: http://fedorahosted.org/released/%{name}/%{name}-%{version}.tar.bz2
+# Turn on ntp in firstboot
+Patch0: system-config-date-1.9.67-ipos-ntp-on.patch
 # Until version 1.9.34, system-config-date contained online documentation.
 # From version 1.9.35 on, online documentation is split off into its own
 # package system-config-date-docs. The following ensures that updating from
@@ -88,6 +90,7 @@ synchronize the time of the system with an NTP time server.
 
 %prep
 %setup -q
+%patch0 -p1 -b .ipos-ntp-on
 
 %build
 make \
