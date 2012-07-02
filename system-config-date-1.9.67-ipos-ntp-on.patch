@@ -1,0 +1,25 @@
+From 38d30ff6fb0ca698db5554f7d2866e3206ae3fab Mon Sep 17 00:00:00 2001
+From: Mattias Ohlsson <mattias.ohlsson@inprose.com>
+Date: Mon, 2 Jul 2012 15:12:52 +0200
+Subject: [PATCH] turn on ntp
+
+---
+ src/system-config-date.glade |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/system-config-date.glade b/src/system-config-date.glade
+index f49eaf5..2b0d6c7 100644
+--- a/src/system-config-date.glade
++++ b/src/system-config-date.glade
+@@ -116,7 +116,7 @@
+ 		  <property name="use_underline">True</property>
+ 		  <property name="relief">GTK_RELIEF_NORMAL</property>
+ 		  <property name="focus_on_click">True</property>
+-		  <property name="active">False</property>
++		  <property name="active">True</property>
+ 		  <property name="inconsistent">False</property>
+ 		  <property name="draw_indicator">True</property>
+ 		</widget>
+-- 
+1.7.10.2
+
