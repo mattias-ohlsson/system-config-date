@@ -31,8 +31,8 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.67
-Release: 3%{?dist}
+Version: 1.9.68
+Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
 Group: System Environment/Base
@@ -144,11 +144,8 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
-* Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.67-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
-
-* Sat Jan 14 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.67-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+* Tue Sep 11 2012 Nils Philippsen <nils@redhat.com> - 1.9.68-1
+- pull updated translations
 
 * Tue Oct 18 2011 Nils Philippsen <nils@redhat.com> - 1.9.67-1
 - enable tree lines in TZ treeview (#746731)
