@@ -31,7 +31,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.68
+Version: 1.10.0
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -54,7 +54,7 @@ BuildRequires: python
 BuildRequires: python-devel
 
 Requires: python >= 2.0
-Requires: python-slip >= 0.2.11
+Requires: python-slip >= 0.2.21
 Requires: pygtk2 >= 2.12.0
 Requires: pygtk2-libglade
 Requires: gnome-python2-canvas
@@ -144,6 +144,11 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Mon Oct 22 2012 Nils Philippsen <nils@redhat.com> - 1.10.0-1
+- use pkexec instead of consolehelper
+- read/write /etc/localtime as symbolic link and only fall back to using
+  /etc/sysconfig/clock if it is present (#824033)
+
 * Tue Sep 11 2012 Nils Philippsen <nils@redhat.com> - 1.9.68-1
 - pull updated translations
 
