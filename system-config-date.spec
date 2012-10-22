@@ -124,8 +124,7 @@ fi
 %{_mandir}/man8/system-config-date*
 %{_mandir}/fr/man8/system-config-date*
 %{_mandir}/ja/man8/system-config-date*
-%config(noreplace) %{_sysconfdir}/security/console.apps/system-config-date
-%config(noreplace) %{_sysconfdir}/pam.d/system-config-date
+%{_datadir}/polkit-1/actions/org.fedoraproject.config.date.policy
 %{python_sitelib}/scdate
 %{python_sitelib}/scdate-%{version}-py%{python_version}.egg-info
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
