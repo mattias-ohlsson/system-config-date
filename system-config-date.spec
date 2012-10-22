@@ -9,12 +9,6 @@
 %bcond_with newt_python
 %endif
 
-%if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 9 || 0%{?rhel} >= 6
-%bcond_without console_util
-%else
-%bcond_with console_util
-%endif
-
 # Enterprise versions pull in docs automatically
 %if 0%{?rhel} > 0
 %bcond_without require_docs
@@ -58,11 +52,7 @@ Requires: python-slip >= 0.2.21
 Requires: pygtk2 >= 2.12.0
 Requires: pygtk2-libglade
 Requires: gnome-python2-canvas
-%if %{with console_util}
-Requires: usermode-gtk >= 1.94
-%else
-Requires: usermode-gtk >= 1.36
-%endif
+Requires: polkit
 
 %if %{with systemd}
 Requires: systemd-units
@@ -96,9 +86,6 @@ make \
 %endif
 %if 0%{?rhel} > 0
     POOL_NTP_ORG_VENDOR=rhel \
-%endif
-%if %{with console_util}
-    CONSOLE_USE_CONFIG_UTIL=1 \
 %endif
     %{?_smp_mflags}
 
