@@ -98,6 +98,7 @@ desktop-file-install --vendor system --delete-original       \
   $RPM_BUILD_ROOT%{_datadir}/applications/system-config-date.desktop
 
 %find_lang %name
+%find_lang %{name}-timezones
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -114,7 +115,7 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
 
-%files -f %{name}.lang
+%files -f %{name}.lang -f %{name}-timezones.lang
 %defattr(-,root,root,-)
 %doc COPYING
 %{_bindir}/system-config-date
@@ -133,6 +134,7 @@ fi
 * Tue Oct 23 2012 Nils Philippsen <nils@redhat.com> - 1.10.1-1
 - don't trip over missing /etc/sysconfig/network file (#857412)
 - pull updated translations
+- install and use timezone translations properly
 
 * Mon Oct 22 2012 Nils Philippsen <nils@redhat.com> - 1.10.0-1
 - use pkexec instead of consolehelper
