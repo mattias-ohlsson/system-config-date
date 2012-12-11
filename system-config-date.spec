@@ -770,7 +770,7 @@ fi
 * Mon Sep 13 2004 Nils Philippsen <nphilipp@redhat.com>
 - get widget sensitivity correct on startup (#132431)
 
-* Thu Sep 03 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.5-1
+* Fri Sep 03 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.5-1
 - actually display time zone map (#131641)
 - put NTP stuff into own tab to better accommodate firstboot (#131314)
 - add accelerators to Date & Time tab
@@ -1134,7 +1134,7 @@ fi
 - added i18n stuff
 * Wed Jul 04 2001 Karsten Hopp <karsten@redhat.de>
 - fix install-path (INSTROOT)
-* Tue Jun 27 2001 Tammy Fox <tfox@redhat.com>
+* Wed Jun 27 2001 Tammy Fox <tfox@redhat.com>
 - added help and help button
 * Sun Jun 24 2001 Brent Fox <bfox@redhat.com>
 - got starting and stopping of ntpd working
