@@ -25,7 +25,7 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.10.4
+Version: 1.10.5
 Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
@@ -131,6 +131,12 @@ fi
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
+* Tue Dec 11 2012 Nils Philippsen <nils@redhat.com> - 1.10.5-1
+- pull updated and new translations (#878319)
+- catch (rare) errors from fork()
+- catch unavailable display (#766936)
+- pull updated time zones
+
 * Thu Dec 06 2012 Nils Philippsen <nils@redhat.com> - 1.10.4-1
 - hide SIGINT from firstboot exception handler (#862828)
 - pull updated translations
