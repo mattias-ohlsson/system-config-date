@@ -9,12 +9,6 @@
 %bcond_with newt_python
 %endif
 
-%if 0%{?fedora}%{?rhel} == 0 || 0%{?fedora} >= 9 || 0%{?rhel} >= 6
-%bcond_without console_util
-%else
-%bcond_with console_util
-%endif
-
 # Enterprise versions pull in docs automatically
 %if 0%{?rhel} > 0
 %bcond_without require_docs
@@ -31,8 +25,8 @@
 
 Summary: A graphical interface for modifying system date and time
 Name: system-config-date
-Version: 1.9.67
-Release: 2%{?dist}
+Version: 1.10.5
+Release: 1%{?dist}
 URL: http://fedorahosted.org/%{name}
 License: GPLv2+
 Group: System Environment/Base
@@ -56,15 +50,11 @@ BuildRequires: python
 BuildRequires: python-devel
 
 Requires: python >= 2.0
-Requires: python-slip >= 0.2.11
+Requires: python-slip >= 0.2.21
 Requires: pygtk2 >= 2.12.0
 Requires: pygtk2-libglade
 Requires: gnome-python2-canvas
-%if %{with console_util}
-Requires: usermode-gtk >= 1.94
-%else
-Requires: usermode-gtk >= 1.36
-%endif
+Requires: polkit
 
 %if %{with systemd}
 Requires: systemd-units
@@ -100,9 +90,6 @@ make \
 %if 0%{?rhel} > 0
     POOL_NTP_ORG_VENDOR=rhel \
 %endif
-%if %{with console_util}
-    CONSOLE_USE_CONFIG_UTIL=1 \
-%endif
     %{?_smp_mflags}
 
 %install
@@ -114,6 +101,7 @@ desktop-file-install --vendor system --delete-original       \
   $RPM_BUILD_ROOT%{_datadir}/applications/system-config-date.desktop
 
 %find_lang %name
+%find_lang %{name}-timezones
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -130,7 +118,7 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
 
-%files -f %{name}.lang
+%files -f %{name}.lang -f %{name}-timezones.lang
 %defattr(-,root,root,-)
 %doc COPYING
 %{_bindir}/system-config-date
@@ -140,15 +128,40 @@ fi
 %{_mandir}/man8/system-config-date*
 %{_mandir}/fr/man8/system-config-date*
 %{_mandir}/ja/man8/system-config-date*
-%config(noreplace) %{_sysconfdir}/security/console.apps/system-config-date
-%config(noreplace) %{_sysconfdir}/pam.d/system-config-date
+%{_datadir}/polkit-1/actions/org.fedoraproject.config.date.policy
 %{python_sitelib}/scdate
 %{python_sitelib}/scdate-%{version}-py%{python_version}.egg-info
 #%{python_sitelib}/scdate.dbus-%{version}-py%{python_version}.egg-info
 
 %changelog
-* Sat Jan 14 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.67-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+* Tue Dec 11 2012 Nils Philippsen <nils@redhat.com> - 1.10.5-1
+- pull updated and new translations (#878319)
+- catch (rare) errors from fork()
+- catch unavailable display (#766936)
+- pull updated time zones
+
+* Thu Dec 06 2012 Nils Philippsen <nils@redhat.com> - 1.10.4-1
+- hide SIGINT from firstboot exception handler (#862828)
+- pull updated translations
+
+* Thu Nov 08 2012 Nils Philippsen <nils@redhat.com> - 1.10.3-1
+- tighten policy
+
+* Thu Oct 25 2012 Nils Philippsen <nils@redhat.com> - 1.10.2-1
+- pkexec the right executable
+
+* Tue Oct 23 2012 Nils Philippsen <nils@redhat.com> - 1.10.1-1
+- don't trip over missing /etc/sysconfig/network file (#857412)
+- pull updated translations
+- install and use timezone translations properly
+
+* Mon Oct 22 2012 Nils Philippsen <nils@redhat.com> - 1.10.0-1
+- use pkexec instead of consolehelper
+- read/write /etc/localtime as symbolic link and only fall back to using
+  /etc/sysconfig/clock if it is present (#824033)
+
+* Tue Sep 11 2012 Nils Philippsen <nils@redhat.com> - 1.9.68-1
+- pull updated translations
 
 * Tue Oct 18 2011 Nils Philippsen <nils@redhat.com> - 1.9.67-1
 - enable tree lines in TZ treeview (#746731)
@@ -760,7 +773,7 @@ fi
 * Mon Sep 13 2004 Nils Philippsen <nphilipp@redhat.com>
 - get widget sensitivity correct on startup (#132431)
 
-* Thu Sep 03 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.5-1
+* Fri Sep 03 2004 Nils Philippsen <nphilipp@redhat.com> 1.7.5-1
 - actually display time zone map (#131641)
 - put NTP stuff into own tab to better accommodate firstboot (#131314)
 - add accelerators to Date & Time tab
@@ -1124,7 +1137,7 @@ fi
 - added i18n stuff
 * Wed Jul 04 2001 Karsten Hopp <karsten@redhat.de>
 - fix install-path (INSTROOT)
-* Tue Jun 27 2001 Tammy Fox <tfox@redhat.com>
+* Wed Jun 27 2001 Tammy Fox <tfox@redhat.com>
 - added help and help button
 * Sun Jun 24 2001 Brent Fox <bfox@redhat.com>
 - got starting and stopping of ntpd working
